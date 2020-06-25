@@ -5,20 +5,12 @@ import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
 
 class SortingPage extends StatelessWidget {
-  final List<String> sortingTypes = [
-    "Bubble Sort",
-    "Insertion Sort",
-    "Selection Sort",
-    "Merge Sort",
-    "Quick Sort"
-  ];
-
   @override
   Widget build(BuildContext context) {
     SortingProvider sortingProvider = Provider.of<SortingProvider>(context);
-    int n = sortingProvider.size;
 
-    String value = sortingTypes[0];
+    int n = sortingProvider.size;
+    String value = sortingProvider.selectedSortingType;
 
     int height = MediaQuery.of(context).size.height.toInt();
     int width = MediaQuery.of(context).size.width.toInt();
@@ -55,8 +47,10 @@ class SortingPage extends StatelessWidget {
         appBar: AppBar(
           title: DropdownButton<String>(
             value: value,
-            onChanged: (String value) {},
-            items: sortingTypes
+            onChanged: (String value) {
+              sortingProvider.changeSortingTypeSelection(sortingType: value);
+            },
+            items: SORTING_TYPES
                 .map(
                   (String sortingType) => DropdownMenuItem<String>(
                     value: sortingType,

@@ -7,6 +7,8 @@ import 'package:sortingvisualizer/data/constants.dart';
 class SortingProvider extends ChangeNotifier {
   final int _size;
 
+  String _selectedSortingType = "Bubble Sort";
+
   SortingProvider({@required int size})
       : this._size = size,
         assert(size != null);
@@ -24,5 +26,12 @@ class SortingProvider extends ChangeNotifier {
     }
 
     return arr;
+  }
+
+  String get selectedSortingType => _selectedSortingType;
+
+  void changeSortingTypeSelection({@required String sortingType}) {
+    this._selectedSortingType = sortingType;
+    notifyListeners();
   }
 }
