@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sortingvisualizer/bloc/sorting_page.dart';
+import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -60,13 +63,19 @@ class HomePage extends StatelessWidget {
                       onPressed: () {
                         if (_key.currentState.validate()) {
                           int size = int.parse(_controller.text);
+                          List<int> arr = [];
+
+                          for (int i = 0; i < size; ++i) {
+                            int random = Random().nextInt(MAX_SIZE);
+                            arr.add(random);
+                          }
 
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
                                   ChangeNotifierProvider<SortingProvider>.value(
-                                value: SortingProvider(size),
+                                value: SortingProvider(size: size, arr: arr),
                                 child: SortingPage(),
                               ),
                             ),

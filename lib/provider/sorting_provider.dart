@@ -1,22 +1,17 @@
-import 'dart:math';
-
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
-import 'package:sortingvisualizer/data/constants.dart';
 
 class SortingProvider extends ChangeNotifier {
   final int _size;
-  final List<int> _arr = [];
+  final List<int> _arr;
 
   String _selectedSortingType = "Bubble Sort";
 
-  SortingProvider(this._size) {
-    for (int i = 0; i < size; ++i) {
-      int random = Random().nextInt(MAX_SIZE);
-
-      _arr.add(random);
-    }
-  }
+  SortingProvider({@required int size, @required List<int> arr})
+      : this._size = size,
+        this._arr = arr,
+        assert(size != null),
+        assert(arr != null);
 
   int get size => _size;
 
