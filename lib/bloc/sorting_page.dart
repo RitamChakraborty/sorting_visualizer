@@ -3,6 +3,7 @@ import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
+import 'package:sortingvisualizer/utils/utils.dart';
 
 class SortingPage extends StatelessWidget {
   @override
@@ -10,7 +11,8 @@ class SortingPage extends StatelessWidget {
     SortingProvider sortingProvider = Provider.of<SortingProvider>(context);
 
     int n = sortingProvider.size;
-    String value = sortingProvider.selectedSortingType;
+    String value =
+        getSortingTypeString(sortingTypes: sortingProvider.selectedSortingType);
 
     int height = MediaQuery.of(context).size.height.toInt();
     int width = MediaQuery.of(context).size.width.toInt();
@@ -23,6 +25,7 @@ class SortingPage extends StatelessWidget {
     double barWidth = division * 0.5;
     double barMargin = division * 0.25;
 
+    /// Generating the bars
     List<Widget> children = List<Widget>.generate(
       n,
       (int index) => Container(
@@ -42,14 +45,15 @@ class SortingPage extends StatelessWidget {
     Widget dropDownButton = DropdownButton<String>(
       value: value,
       onChanged: (String value) {
-        sortingProvider.changeSortingTypeSelection(sortingType: value);
+        sortingProvider.changeSortingTypeSelection(
+            sortingType: getSortingType(value: value));
       },
-      items: SORTING_TYPES
+      items: SortingTypes.values
           .map(
-            (String sortingType) => DropdownMenuItem<String>(
-              value: sortingType,
+            (SortingTypes sortingType) => DropdownMenuItem<String>(
+              value: getSortingTypeString(sortingTypes: sortingType),
               child: Text(
-                sortingType,
+                getSortingTypeString(sortingTypes: sortingType),
               ),
             ),
           )

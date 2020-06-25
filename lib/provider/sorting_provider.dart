@@ -1,11 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:sortingvisualizer/data/constants.dart';
 
 class SortingProvider extends ChangeNotifier {
   final int _size;
   final List<int> _arr;
 
-  String _selectedSortingType = "Bubble Sort";
+  SortingTypes _selectedSortingType = SortingTypes.BUBBLE_SORT;
 
   SortingProvider({@required int size, @required List<int> arr})
       : this._size = size,
@@ -17,28 +18,28 @@ class SortingProvider extends ChangeNotifier {
 
   List<int> get arr => _arr;
 
-  String get selectedSortingType => _selectedSortingType;
+  SortingTypes get selectedSortingType => _selectedSortingType;
 
-  void changeSortingTypeSelection({@required String sortingType}) {
+  void changeSortingTypeSelection({@required SortingTypes sortingType}) {
     this._selectedSortingType = sortingType;
     notifyListeners();
   }
 
   Future<void> sort() async {
     switch (_selectedSortingType) {
-      case 'Bubble Sort':
-        await _bubbleSort();
+      case SortingTypes.BUBBLE_SORT:
+        _bubbleSort();
         break;
-      case 'Insertion Sort':
+      case SortingTypes.INSERTION_SORT:
         _insertionSort();
         break;
-      case 'Selection Sort':
+      case SortingTypes.SELECTION_SORT:
         _selectionSort();
         break;
-      case 'Merge Sort':
+      case SortingTypes.MERGE_SORT:
         _mergeSort();
         break;
-      case 'Quick Sort':
+      case SortingTypes.QUICK_SORT:
         _quickSort();
         break;
     }

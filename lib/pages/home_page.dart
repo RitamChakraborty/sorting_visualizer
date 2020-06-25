@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
         int size = int.parse(_controller.text);
         List<int> arr = [];
 
-        // Creating array
+        /// Creating array
         for (int i = 0; i < size; ++i) {
           int random = Random().nextInt(MAX_SIZE);
           arr.add(random);
