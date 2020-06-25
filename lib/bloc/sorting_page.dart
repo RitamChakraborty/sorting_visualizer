@@ -25,10 +25,8 @@ class SortingPage extends StatelessWidget {
     double barWidth = division * 0.5;
     double barMargin = division * 0.25;
 
-    /// Generating the bars
-    List<Widget> children = List<Widget>.generate(
-      n,
-      (int index) => Container(
+    Widget bar({@required int index}) {
+      return Container(
         height: arr[index],
         width: barWidth,
         margin: EdgeInsets.only(left: barMargin + (division * index)),
@@ -39,8 +37,12 @@ class SortingPage extends StatelessWidget {
             topRight: Radius.circular(10),
           ),
         ),
-      ),
-    );
+      );
+    }
+
+    /// Generating the bars
+    List<Widget> children =
+        List<Widget>.generate(n, (int index) => bar(index: index));
 
     Widget dropDownButton = DropdownButton<String>(
       value: value,
@@ -48,9 +50,9 @@ class SortingPage extends StatelessWidget {
         sortingProvider.changeSortingTypeSelection(
             sortingType: getSortingType(value: value));
       },
-      items: SortingTypes.values
+      items: SortingType.values
           .map(
-            (SortingTypes sortingType) => DropdownMenuItem<String>(
+            (SortingType sortingType) => DropdownMenuItem<String>(
               value: getSortingTypeString(sortingTypes: sortingType),
               child: Text(
                 getSortingTypeString(sortingTypes: sortingType),

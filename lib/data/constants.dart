@@ -1,6 +1,6 @@
 const int MAX_SIZE = 1000;
 
-enum SortingTypes {
+enum SortingType {
   BUBBLE_SORT,
   INSERTION_SORT,
   SELECTION_SORT,

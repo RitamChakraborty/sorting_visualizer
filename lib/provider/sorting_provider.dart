@@ -6,7 +6,7 @@ class SortingProvider extends ChangeNotifier {
   final int _size;
   final List<int> _arr;
 
-  SortingTypes _selectedSortingType = SortingTypes.BUBBLE_SORT;
+  SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
 
   SortingProvider({@required int size, @required List<int> arr})
       : this._size = size,
@@ -18,34 +18,34 @@ class SortingProvider extends ChangeNotifier {
 
   List<int> get arr => _arr;
 
-  SortingTypes get selectedSortingType => _selectedSortingType;
+  SortingType get selectedSortingType => _selectedSortingType;
 
-  void changeSortingTypeSelection({@required SortingTypes sortingType}) {
+  void changeSortingTypeSelection({@required SortingType sortingType}) {
     this._selectedSortingType = sortingType;
     notifyListeners();
   }
 
-  Future<void> sort() async {
+  void sort() {
     switch (_selectedSortingType) {
-      case SortingTypes.BUBBLE_SORT:
+      case SortingType.BUBBLE_SORT:
         _bubbleSort();
         break;
-      case SortingTypes.INSERTION_SORT:
+      case SortingType.INSERTION_SORT:
         _insertionSort();
         break;
-      case SortingTypes.SELECTION_SORT:
+      case SortingType.SELECTION_SORT:
         _selectionSort();
         break;
-      case SortingTypes.MERGE_SORT:
+      case SortingType.MERGE_SORT:
         _mergeSort();
         break;
-      case SortingTypes.QUICK_SORT:
+      case SortingType.QUICK_SORT:
         _quickSort();
         break;
     }
   }
 
-  void _bubbleSort() async {
+  void _bubbleSort() {
     for (int i = 0; i < _size; ++i) {
       for (int j = (i + 1); j < _size; ++j) {
         if (arr[i] > arr[j]) {
@@ -53,7 +53,6 @@ class SortingProvider extends ChangeNotifier {
           arr[i] = arr[j];
           arr[j] = temp;
 
-          await Future.delayed((Duration(seconds: 1)));
           notifyListeners();
         }
       }
