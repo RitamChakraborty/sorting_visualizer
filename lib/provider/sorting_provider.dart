@@ -28,4 +28,47 @@ class SortingProvider extends ChangeNotifier {
     this._selectedSortingType = sortingType;
     notifyListeners();
   }
+
+  Future<void> sort() async {
+    switch (_selectedSortingType) {
+      case 'Bubble Sort':
+        await _bubbleSort();
+        break;
+      case 'Insertion Sort':
+        _insertionSort();
+        break;
+      case 'Selection Sort':
+        _selectionSort();
+        break;
+      case 'Merge Sort':
+        _mergeSort();
+        break;
+      case 'Quick Sort':
+        _quickSort();
+        break;
+    }
+  }
+
+  void _bubbleSort() async {
+    for (int i = 0; i < _size; ++i) {
+      for (int j = (i + 1); j < _size; ++j) {
+        if (arr[i] > arr[j]) {
+          int temp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = temp;
+
+          await Future.delayed((Duration(seconds: 1)));
+          notifyListeners();
+        }
+      }
+    }
+  }
+
+  void _insertionSort() {}
+
+  void _selectionSort() {}
+
+  void _mergeSort() {}
+
+  void _quickSort() {}
 }

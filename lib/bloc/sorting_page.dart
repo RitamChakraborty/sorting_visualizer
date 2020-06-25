@@ -66,7 +66,9 @@ class SortingPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(
                 color: Theme.of(context).buttonColor,
-                onPressed: () {},
+                onPressed: () async {
+                  await sortingProvider.sort();
+                },
                 child: Text(
                   "Sort",
                 ),
