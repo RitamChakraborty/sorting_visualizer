@@ -5,12 +5,14 @@ import 'package:sortingvisualizer/data/constants.dart';
 class SortingProvider extends ChangeNotifier {
   final int _size;
   final List<int> _arr;
+  final List<int> _backUp;
 
   SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
 
   SortingProvider({@required int size, @required List<int> arr})
       : this._size = size,
         this._arr = arr,
+        this._backUp = new List<int>.from(arr),
         assert(size != null),
         assert(arr != null);
 
@@ -22,6 +24,12 @@ class SortingProvider extends ChangeNotifier {
 
   void changeSortingTypeSelection({@required SortingType sortingType}) {
     this._selectedSortingType = sortingType;
+    notifyListeners();
+  }
+
+  void reset() {
+    _arr.clear();
+    _arr.addAll(_backUp);
     notifyListeners();
   }
 

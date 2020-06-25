@@ -73,7 +73,12 @@ class SortingPage extends StatelessWidget {
       );
     }
 
-    Widget resetButton = button(text: "Reset", onPressed: () {});
+    Widget resetButton = button(
+        text: "Reset",
+        onPressed: () {
+          sortingProvider.reset();
+        });
+
     Widget sortButton = button(
         text: "Sort",
         onPressed: () {
