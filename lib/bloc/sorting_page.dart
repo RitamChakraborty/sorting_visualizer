@@ -23,13 +23,12 @@ class SortingPage extends StatelessWidget {
     double barWidth = division * 0.5;
     double barMargin = division * 0.25;
 
-    List<Widget> children = [];
-
-    for (int i = 0; i < arr.length; ++i) {
-      Widget bar = Container(
-        height: arr[i],
+    List<Widget> children = List<Widget>.generate(
+      n,
+      (int index) => Container(
+        height: arr[index],
         width: barWidth,
-        margin: EdgeInsets.only(left: barMargin + (division * i)),
+        margin: EdgeInsets.only(left: barMargin + (division * index)),
         decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.only(
@@ -37,43 +36,45 @@ class SortingPage extends StatelessWidget {
             topRight: Radius.circular(10),
           ),
         ),
-      );
+      ),
+    );
 
-      children.add(bar);
-    }
+    Widget dropDownButton = DropdownButton<String>(
+      value: value,
+      onChanged: (String value) {
+        sortingProvider.changeSortingTypeSelection(sortingType: value);
+      },
+      items: SORTING_TYPES
+          .map(
+            (String sortingType) => DropdownMenuItem<String>(
+              value: sortingType,
+              child: Text(
+                sortingType,
+              ),
+            ),
+          )
+          .toList(),
+    );
+
+    Widget sortButton = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MaterialButton(
+        color: Theme.of(context).buttonColor,
+        onPressed: () async {
+          await sortingProvider.sort();
+        },
+        child: Text(
+          "Sort",
+        ),
+      ),
+    );
 
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: DropdownButton<String>(
-            value: value,
-            onChanged: (String value) {
-              sortingProvider.changeSortingTypeSelection(sortingType: value);
-            },
-            items: SORTING_TYPES
-                .map(
-                  (String sortingType) => DropdownMenuItem<String>(
-                    value: sortingType,
-                    child: Text(
-                      sortingType,
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
+          title: dropDownButton,
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: MaterialButton(
-                color: Theme.of(context).buttonColor,
-                onPressed: () async {
-                  await sortingProvider.sort();
-                },
-                child: Text(
-                  "Sort",
-                ),
-              ),
-            )
+            sortButton,
           ],
         ),
         body: SafeArea(
