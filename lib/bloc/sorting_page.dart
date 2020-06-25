@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
@@ -24,7 +25,7 @@ class SortingPage extends StatelessWidget {
     double barMargin = division * 0.25;
 
     List<double> heightArr = array
-        .map((int value) => ((height - 100) * (value / MAX_SIZE) + 10))
+        .map((int value) => ((height - 150) * (value / MAX_SIZE) + 10))
         .toList();
 
     List<double> widthArr =
@@ -91,19 +92,38 @@ class SortingPage extends StatelessWidget {
       onPressed: sortingProvider.sort,
     );
 
+    Widget animationSpeedSlider = Slider(
+      value: 500,
+      max: 1000,
+      min: 100,
+      divisions: 1000 ~/ 100,
+      onChanged: (double value) {
+        print(value);
+      },
+    );
+
     return Material(
       child: Scaffold(
         appBar: AppBar(
           title: dropDownButton,
           actions: [sortButton, resetButton],
+          flexibleSpace: animationSpeedSlider,
         ),
         body: SafeArea(
-          child: Container(
-            alignment: Alignment.bottomLeft,
-            child: Stack(
-              alignment: Alignment.bottomLeft,
-              children: children,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              animationSpeedSlider,
+              Expanded(
+                child: Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Stack(
+                    alignment: Alignment.bottomLeft,
+                    children: children,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
