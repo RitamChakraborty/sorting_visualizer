@@ -43,27 +43,23 @@ class SortingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void sort() {
+  Future<void> sort() {
     switch (_selectedSortingType) {
       case SortingType.BUBBLE_SORT:
-        _bubbleSort();
-        break;
+        return _bubbleSort();
       case SortingType.INSERTION_SORT:
-        _insertionSort();
-        break;
+        return _insertionSort();
       case SortingType.SELECTION_SORT:
-        _selectionSort();
-        break;
+        return _selectionSort();
       case SortingType.MERGE_SORT:
-        _mergeSort();
+        return _mergeSort();
         break;
       case SortingType.QUICK_SORT:
-        _quickSort();
-        break;
+        return _quickSort();
     }
   }
 
-  void _bubbleSort() {
+  Future<void> _bubbleSort() async {
     for (int i = 0; i < _size; ++i) {
       for (int j = (i + 1); j < _size; ++j) {
         if (_arr[i] > _arr[j]) {
@@ -72,7 +68,9 @@ class SortingProvider extends ChangeNotifier {
           _arr[j] = temp;
 
           temp = _indexArr[i];
+          await Future.delayed(Duration(milliseconds: 200));
           _indexArr[i] = _indexArr[j];
+          await Future.delayed(Duration(milliseconds: 200));
           _indexArr[j] = temp;
 
           notifyListeners();
@@ -81,11 +79,11 @@ class SortingProvider extends ChangeNotifier {
     }
   }
 
-  void _insertionSort() {}
+  Future<void> _insertionSort() async {}
 
-  void _selectionSort() {}
+  Future<void> _selectionSort() async {}
 
-  void _mergeSort() {}
+  Future<void> _mergeSort() async {}
 
-  void _quickSort() {}
+  Future<void> _quickSort() async {}
 }

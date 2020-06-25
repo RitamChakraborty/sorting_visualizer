@@ -64,28 +64,28 @@ class SortingPage extends StatelessWidget {
           .toList(),
     );
 
-    Widget button({@required String text, @required VoidCallback onPressed}) {
+    Widget button({@required String text, @required Function onPressed}) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: MaterialButton(
           color: Theme.of(context).buttonColor,
-          onPressed: onPressed,
+          onPressed: () async {
+            await onPressed();
+          },
           child: Text(text),
         ),
       );
     }
 
     Widget resetButton = button(
-        text: "Reset",
-        onPressed: () {
-          sortingProvider.reset();
-        });
+      text: "Reset",
+      onPressed: sortingProvider.reset,
+    );
 
     Widget sortButton = button(
-        text: "Sort",
-        onPressed: () {
-          sortingProvider.sort();
-        });
+      text: "Sort",
+      onPressed: sortingProvider.sort,
+    );
 
     return Material(
       child: Scaffold(
