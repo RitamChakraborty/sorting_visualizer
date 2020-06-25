@@ -19,19 +19,23 @@ class SortingPage extends StatelessWidget {
     int height = MediaQuery.of(context).size.height.toInt();
     int width = MediaQuery.of(context).size.width.toInt();
 
-    List<double> arr = indexArr.map((int value) {
-      return (height - 100) * (array[value] / MAX_SIZE) + 10;
-    }).toList();
-
-    double division = width / arr.length;
+    double division = width / n;
     double barWidth = division * 0.5;
     double barMargin = division * 0.25;
 
-    Widget bar({@required int index}) {
-      return Container(
-        height: arr[index],
+    List<double> heightArr = array
+        .map((int value) => ((height - 100) * (value / MAX_SIZE) + 10))
+        .toList();
+
+    List<double> widthArr =
+        indexArr.map((int value) => (barMargin + (division * value))).toList();
+
+    Widget bar({@required double height, @required double width}) {
+      return AnimatedContainer(
+        duration: Duration(milliseconds: 500),
+        height: height,
         width: barWidth,
-        margin: EdgeInsets.only(left: barMargin + (division * index)),
+        margin: EdgeInsets.only(left: width),
         decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.only(
@@ -43,8 +47,8 @@ class SortingPage extends StatelessWidget {
     }
 
     /// Generating the bars
-    List<Widget> children =
-        sortingProvider.indexArr.map((int index) => bar(index: index)).toList();
+    List<Widget> children = List<Widget>.generate(n,
+        (int index) => bar(height: heightArr[index], width: widthArr[index]));
 
     Widget dropDownButton = DropdownButton<String>(
       value: value,

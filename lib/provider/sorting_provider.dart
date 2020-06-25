@@ -13,7 +13,7 @@ class SortingProvider extends ChangeNotifier {
   SortingProvider({@required int size, @required List<int> array})
       : this._size = size,
         this._arr = array,
-        this._backupArray = new List<int>.from(array),
+        this._backupArray = List<int>.from(array),
         this._indexArr = List<int>.generate(size, (int index) => index),
         assert(size != null),
         assert(array != null);
@@ -57,6 +57,8 @@ class SortingProvider extends ChangeNotifier {
       case SortingType.QUICK_SORT:
         return _quickSort();
     }
+
+    return null;
   }
 
   Future<void> _bubbleSort() async {
@@ -67,15 +69,17 @@ class SortingProvider extends ChangeNotifier {
           _arr[i] = _arr[j];
           _arr[j] = temp;
 
-          temp = _indexArr[i];
-          await Future.delayed(Duration(milliseconds: 200));
-          _indexArr[i] = _indexArr[j];
-          await Future.delayed(Duration(milliseconds: 200));
-          _indexArr[j] = temp;
-
+          int _indexI = _backupArray.indexOf(_arr[i]);
+          int _indexJ = _backupArray.indexOf(_arr[j]);
+          _indexArr[_indexI] = i;
+          _indexArr[_indexJ] = j;
           notifyListeners();
+
+          await Future.delayed(Duration(milliseconds: 600));
         }
       }
+
+      await Future.delayed(Duration(milliseconds: 100));
     }
   }
 
