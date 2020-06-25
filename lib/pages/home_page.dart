@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
           MaterialPageRoute(
             builder: (BuildContext context) =>
                 ChangeNotifierProvider<SortingProvider>.value(
-              value: SortingProvider(size: size, arr: arr),
+              value: SortingProvider(size: size, array: arr),
               child: SortingPage(),
             ),
           ),

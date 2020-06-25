@@ -5,20 +5,24 @@ import 'package:sortingvisualizer/data/constants.dart';
 class SortingProvider extends ChangeNotifier {
   final int _size;
   final List<int> _arr;
-  final List<int> _backUp;
+  final List<int> _backupArray;
+  final List<int> _indexArr;
 
   SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
 
-  SortingProvider({@required int size, @required List<int> arr})
+  SortingProvider({@required int size, @required List<int> array})
       : this._size = size,
-        this._arr = arr,
-        this._backUp = new List<int>.from(arr),
+        this._arr = array,
+        this._backupArray = new List<int>.from(array),
+        this._indexArr = List<int>.generate(size, (int index) => index),
         assert(size != null),
-        assert(arr != null);
+        assert(array != null);
 
   int get size => _size;
 
-  List<int> get arr => _arr;
+  List<int> get array => _backupArray;
+
+  List<int> get indexArr => _indexArr;
 
   SortingType get selectedSortingType => _selectedSortingType;
 
@@ -28,8 +32,14 @@ class SortingProvider extends ChangeNotifier {
   }
 
   void reset() {
+    /// Reset the main array which is being sorted
     _arr.clear();
-    _arr.addAll(_backUp);
+    _arr.addAll(_backupArray);
+
+    /// Reset the index array by which bars are placed
+    _indexArr.clear();
+    _indexArr.addAll(List<int>.generate(size, (int index) => index));
+
     notifyListeners();
   }
 
@@ -56,10 +66,14 @@ class SortingProvider extends ChangeNotifier {
   void _bubbleSort() {
     for (int i = 0; i < _size; ++i) {
       for (int j = (i + 1); j < _size; ++j) {
-        if (arr[i] > arr[j]) {
-          int temp = arr[i];
-          arr[i] = arr[j];
-          arr[j] = temp;
+        if (_arr[i] > _arr[j]) {
+          int temp = _arr[i];
+          _arr[i] = _arr[j];
+          _arr[j] = temp;
+
+          temp = _indexArr[i];
+          _indexArr[i] = _indexArr[j];
+          _indexArr[j] = temp;
 
           notifyListeners();
         }

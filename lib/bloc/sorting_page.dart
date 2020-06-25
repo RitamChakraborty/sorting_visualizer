@@ -11,14 +11,16 @@ class SortingPage extends StatelessWidget {
     SortingProvider sortingProvider = Provider.of<SortingProvider>(context);
 
     int n = sortingProvider.size;
+    List<int> array = sortingProvider.array;
+    List<int> indexArr = sortingProvider.indexArr;
     String value =
         getSortingTypeString(sortingTypes: sortingProvider.selectedSortingType);
 
     int height = MediaQuery.of(context).size.height.toInt();
     int width = MediaQuery.of(context).size.width.toInt();
 
-    List<double> arr = sortingProvider.arr.map((int value) {
-      return (height - 100) * (value / MAX_SIZE) + 10;
+    List<double> arr = indexArr.map((int value) {
+      return (height - 100) * (array[value] / MAX_SIZE) + 10;
     }).toList();
 
     double division = width / arr.length;
@@ -42,7 +44,7 @@ class SortingPage extends StatelessWidget {
 
     /// Generating the bars
     List<Widget> children =
-        List<Widget>.generate(n, (int index) => bar(index: index));
+        sortingProvider.indexArr.map((int index) => bar(index: index)).toList();
 
     Widget dropDownButton = DropdownButton<String>(
       value: value,
