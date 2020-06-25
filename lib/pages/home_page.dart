@@ -6,11 +6,10 @@ import 'package:sortingvisualizer/provider/sorting_provider.dart';
 
 class HomePage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    SortingProvider sortingProvider = Provider.of<SortingProvider>(context);
-
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -35,23 +34,44 @@ class HomePage extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: _controller,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Number of bars",
+                    Form(
+                      key: _key,
+                      child: TextFormField(
+                        validator: (String input) {
+                          int value = int.parse(input);
+
+                          if (value < 2) {
+                            return "Number of bars have to be greater than 2";
+                          } else if (value > 999) {
+                            return "Number of bars have to be less than 999";
+                          }
+
+                          return null;
+                        },
+                        controller: _controller,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: "Number of bars",
+                        ),
                       ),
                     ),
                     SizedBox(height: 48),
                     MaterialButton(
                       onPressed: () {
-                        sortingProvider.size = int.parse(_controller.text);
+                        if (_key.currentState.validate()) {
+                          int size = int.parse(_controller.text);
 
-                        Navigator.push(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => SortingPage(),
-                            ));
+                              builder: (BuildContext context) =>
+                                  ChangeNotifierProvider<SortingProvider>.value(
+                                value: SortingProvider(size: size),
+                                child: SortingPage(),
+                              ),
+                            ),
+                          );
+                        }
                       },
                       color: Theme.of(context).accentColor,
                       child: Text(

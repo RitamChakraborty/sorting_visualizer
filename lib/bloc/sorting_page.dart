@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
+import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
 
 class SortingPage extends StatelessWidget {
@@ -21,14 +20,12 @@ class SortingPage extends StatelessWidget {
 
     String value = sortingTypes[0];
 
-    List<int> arr = [];
     int height = MediaQuery.of(context).size.height.toInt();
     int width = MediaQuery.of(context).size.width.toInt();
 
-    for (int i = 0; i < n; ++i) {
-      int random = Random().nextInt(height - 100) + 10;
-      arr.add(random);
-    }
+    List<double> arr = sortingProvider.arr.map((int value) {
+      return (height - 100) * (value / MAX_SIZE) + 10;
+    }).toList();
 
     double division = width / arr.length;
     double barWidth = division * 0.5;
@@ -38,7 +35,7 @@ class SortingPage extends StatelessWidget {
 
     for (int i = 0; i < arr.length; ++i) {
       Widget bar = Container(
-        height: arr[i].toDouble(),
+        height: arr[i],
         width: barWidth,
         margin: EdgeInsets.only(left: barMargin + (division * i)),
         decoration: BoxDecoration(
