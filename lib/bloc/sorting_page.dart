@@ -62,26 +62,29 @@ class SortingPage extends StatelessWidget {
           .toList(),
     );
 
-    Widget sortButton = Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: MaterialButton(
-        color: Theme.of(context).buttonColor,
-        onPressed: () async {
-          await sortingProvider.sort();
-        },
-        child: Text(
-          "Sort",
+    Widget button({@required String text, @required VoidCallback onPressed}) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: MaterialButton(
+          color: Theme.of(context).buttonColor,
+          onPressed: onPressed,
+          child: Text(text),
         ),
-      ),
-    );
+      );
+    }
+
+    Widget resetButton = button(text: "Reset", onPressed: () {});
+    Widget sortButton = button(
+        text: "Sort",
+        onPressed: () {
+          sortingProvider.sort();
+        });
 
     return Material(
       child: Scaffold(
         appBar: AppBar(
           title: dropDownButton,
-          actions: [
-            sortButton,
-          ],
+          actions: [sortButton, resetButton],
         ),
         body: SafeArea(
           child: Container(
