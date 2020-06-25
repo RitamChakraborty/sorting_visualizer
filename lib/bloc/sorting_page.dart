@@ -16,6 +16,7 @@ class SortingPage extends StatelessWidget {
     List<int> indexArr = sortingProvider.indexArr;
     String value =
         getSortingTypeString(sortingTypes: sortingProvider.selectedSortingType);
+    double animationSpeed = sortingProvider.animationSpeed;
 
     int height = MediaQuery.of(context).size.height.toInt();
     int width = MediaQuery.of(context).size.width.toInt();
@@ -33,7 +34,7 @@ class SortingPage extends StatelessWidget {
 
     Widget bar({@required double height, @required double width}) {
       return AnimatedContainer(
-        duration: Duration(milliseconds: 500),
+        duration: Duration(milliseconds: animationSpeed.toInt()),
         height: height,
         width: barWidth,
         margin: EdgeInsets.only(left: width),
@@ -93,12 +94,12 @@ class SortingPage extends StatelessWidget {
     );
 
     Widget animationSpeedSlider = Slider(
-      value: 500,
+      value: animationSpeed,
       max: 1000,
       min: 100,
       divisions: 1000 ~/ 100,
-      onChanged: (double value) {
-        print(value);
+      onChanged: (double speed) {
+        sortingProvider.animationSpeed = speed;
       },
     );
 
@@ -107,7 +108,6 @@ class SortingPage extends StatelessWidget {
         appBar: AppBar(
           title: dropDownButton,
           actions: [sortButton, resetButton],
-          flexibleSpace: animationSpeedSlider,
         ),
         body: SafeArea(
           child: Column(

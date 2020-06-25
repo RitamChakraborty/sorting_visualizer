@@ -7,6 +7,7 @@ class SortingProvider extends ChangeNotifier {
   final List<int> _arr;
   final List<int> _backupArray;
   final List<int> _indexArr;
+  double _animationSpeed = 550;
 
   SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
 
@@ -18,6 +19,11 @@ class SortingProvider extends ChangeNotifier {
         assert(size != null),
         assert(array != null);
 
+  set animationSpeed(double speed) {
+    _animationSpeed = speed;
+    notifyListeners();
+  }
+
   int get size => _size;
 
   List<int> get array => _backupArray;
@@ -25,6 +31,8 @@ class SortingProvider extends ChangeNotifier {
   List<int> get indexArr => _indexArr;
 
   SortingType get selectedSortingType => _selectedSortingType;
+
+  double get animationSpeed => _animationSpeed;
 
   void changeSortingTypeSelection({@required SortingType sortingType}) {
     this._selectedSortingType = sortingType;
@@ -75,11 +83,13 @@ class SortingProvider extends ChangeNotifier {
           _indexArr[_indexJ] = j;
           notifyListeners();
 
-          await Future.delayed(Duration(milliseconds: 600));
+          await Future.delayed(
+              Duration(milliseconds: _animationSpeed.toInt() + 100));
         }
       }
 
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(
+          Duration(milliseconds: _animationSpeed.toInt() - 100));
     }
   }
 
