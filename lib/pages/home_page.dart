@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:sortingvisualizer/bloc/sorting_page.dart';
+import 'package:sortingvisualizer/provider/sorting_provider.dart';
 
 class HomePage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    SortingProvider sortingProvider = Provider.of<SortingProvider>(context);
+
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -22,7 +26,7 @@ class HomePage extends StatelessWidget {
             if (maxWidth > maxHeight) {
               padding = maxWidth * 0.1;
             } else {
-              padding = 16.0;
+              padding = 32.0;
             }
 
             return Container(
@@ -41,6 +45,8 @@ class HomePage extends StatelessWidget {
                     SizedBox(height: 48),
                     MaterialButton(
                       onPressed: () {
+                        sortingProvider.size = int.parse(_controller.text);
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(

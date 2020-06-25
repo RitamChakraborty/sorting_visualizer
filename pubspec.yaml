@@ -8,8 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  bloc: any
-  flutter_bloc: any
+  provider: any
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:provider/provider.dart';
+import 'package:sortingvisualizer/provider/sorting_provider.dart';
 
 class SortingPage extends StatelessWidget {
   final List<String> sortingTypes = [
@@ -14,13 +16,16 @@ class SortingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SortingProvider sortingProvider = Provider.of<SortingProvider>(context);
+    int n = sortingProvider.size;
+
     String value = sortingTypes[0];
 
     List<int> arr = [];
     int height = MediaQuery.of(context).size.height.toInt();
     int width = MediaQuery.of(context).size.width.toInt();
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < n; ++i) {
       int random = Random().nextInt(height - 100) + 10;
       arr.add(random);
     }
