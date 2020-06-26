@@ -41,8 +41,8 @@ class SortingPage extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
+            topLeft: Radius.circular(barWidth / 2),
+            topRight: Radius.circular(barWidth / 2),
           ),
         ),
       );
