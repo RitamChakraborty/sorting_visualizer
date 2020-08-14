@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
 import 'package:sortingvisualizer/utils/utils.dart';
+import 'package:sortingvisualizer/widgets/bar.dart';
 import 'package:sortingvisualizer/widgets/rounded_button.dart';
 import 'package:sortingvisualizer/widgets/sorting_dropdown.dart';
 
@@ -36,18 +37,11 @@ class SortingPage extends StatelessWidget {
         indexArr.map((int value) => (barMargin + (division * value))).toList();
 
     Widget bar({@required double height, @required double width}) {
-      return AnimatedContainer(
-        duration: Duration(milliseconds: animationSpeed.toInt()),
+      return Bar(
         height: height,
-        width: barWidth,
-        margin: EdgeInsets.only(left: width),
-        decoration: BoxDecoration(
-          color: Theme.of(context).accentColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(barWidth / 2),
-            topRight: Radius.circular(barWidth / 2),
-          ),
-        ),
+        width: width,
+        barWidth: barWidth,
+        animationSpeed: animationSpeed.toInt(),
       );
     }
 
