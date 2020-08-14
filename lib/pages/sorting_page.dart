@@ -7,6 +7,7 @@ import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
 import 'package:sortingvisualizer/utils/utils.dart';
 import 'package:sortingvisualizer/widgets/rounded_button.dart';
+import 'package:sortingvisualizer/widgets/sorting_dropdown.dart';
 
 class SortingPage extends StatelessWidget {
   @override
@@ -54,30 +55,12 @@ class SortingPage extends StatelessWidget {
     List<Widget> children = List<Widget>.generate(n,
         (int index) => bar(height: heightArr[index], width: widthArr[index]));
 
-    Widget dropDownButton = OutlineButton(
-      color: Colors.white,
-      onPressed: null,
-      disabledBorderColor: Theme.of(context).accentColor,
-      shape: SHAPE,
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: value,
-          onChanged: (String value) {
-            sortingProvider.changeSortingTypeSelection(
-                sortingType: getSortingType(value: value));
-          },
-          items: SortingType.values
-              .map(
-                (SortingType sortingType) => DropdownMenuItem<String>(
-                  value: getSortingTypeString(sortingTypes: sortingType),
-                  child: Text(
-                    getSortingTypeString(sortingTypes: sortingType),
-                  ),
-                ),
-              )
-              .toList(),
-        ),
-      ),
+    Widget dropDownButton = SortingDropdown(
+      value: value,
+      onChanged: (String value) {
+        sortingProvider.changeSortingTypeSelection(
+            sortingType: getSortingType(value: value));
+      },
     );
 
     Widget button({@required String text, @required Function onPressed}) {
