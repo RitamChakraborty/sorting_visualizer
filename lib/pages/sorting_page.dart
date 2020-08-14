@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -52,22 +53,31 @@ class SortingPage extends StatelessWidget {
     List<Widget> children = List<Widget>.generate(n,
         (int index) => bar(height: heightArr[index], width: widthArr[index]));
 
-    Widget dropDownButton = DropdownButton<String>(
-      value: value,
-      onChanged: (String value) {
-        sortingProvider.changeSortingTypeSelection(
-            sortingType: getSortingType(value: value));
-      },
-      items: SortingType.values
-          .map(
-            (SortingType sortingType) => DropdownMenuItem<String>(
-              value: getSortingTypeString(sortingTypes: sortingType),
-              child: Text(
-                getSortingTypeString(sortingTypes: sortingType),
+    Widget dropDownButton = OutlineButton(
+      color: Colors.white,
+      onPressed: null,
+      disabledBorderColor: Theme.of(context).accentColor,
+      child: Container(
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: value,
+            onChanged: (String value) {
+              sortingProvider.changeSortingTypeSelection(
+                  sortingType: getSortingType(value: value));
+            },
+            items: SortingType.values
+                .map(
+                  (SortingType sortingType) => DropdownMenuItem<String>(
+                value: getSortingTypeString(sortingTypes: sortingType),
+                child: Text(
+                  getSortingTypeString(sortingTypes: sortingType),
+                ),
               ),
-            ),
-          )
-          .toList(),
+            )
+                .toList(),
+          ),
+        ),
+      ),
     );
 
     Widget button({@required String text, @required Function onPressed}) {
@@ -108,6 +118,8 @@ class SortingPage extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: dropDownButton,
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
         ),
         body: SafeArea(
           child: Column(
