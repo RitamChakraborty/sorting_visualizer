@@ -83,8 +83,11 @@ class SortingProvider extends ChangeNotifier {
           _indexArr[_indexJ] = j;
           notifyListeners();
 
-          await Future.delayed(
-              Duration(milliseconds: _animationSpeed.toInt() + 100));
+          await Future.delayed(Duration(
+            milliseconds: _animationSpeed.toInt() == 0
+                ? 0
+                : _animationSpeed.toInt() + 100,
+          ));
         }
       }
 
