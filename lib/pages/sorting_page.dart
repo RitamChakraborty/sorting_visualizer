@@ -94,12 +94,12 @@ class SortingPage extends StatelessWidget {
     );
 
     Widget animationSpeedSlider = Slider(
-      value: animationSpeed,
-      max: 1000,
-      min: 100,
-      divisions: 1000 ~/ 100,
+      value: MAX_ANIMATION_SPEED - animationSpeed,
+      max: MAX_ANIMATION_SPEED.toDouble(),
+      min: 0,
+      divisions: MAX_ANIMATION_SPEED ~/ 50,
       onChanged: (double speed) {
-        sortingProvider.animationSpeed = speed;
+        sortingProvider.animationSpeed = MAX_ANIMATION_SPEED - speed;
       },
     );
 

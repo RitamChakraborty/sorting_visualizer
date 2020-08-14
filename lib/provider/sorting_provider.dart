@@ -7,7 +7,7 @@ class SortingProvider extends ChangeNotifier {
   final List<int> _arr;
   final List<int> _backupArray;
   final List<int> _indexArr;
-  double _animationSpeed = 550;
+  double _animationSpeed = 1000;
 
   SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
 
@@ -88,8 +88,10 @@ class SortingProvider extends ChangeNotifier {
         }
       }
 
-      await Future.delayed(
-          Duration(milliseconds: _animationSpeed.toInt() - 100));
+      await Future.delayed(Duration(
+          milliseconds: _animationSpeed.toInt() > 100
+              ? _animationSpeed.toInt() - 100
+              : 0));
     }
   }
 

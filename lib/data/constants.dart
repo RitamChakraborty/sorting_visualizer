@@ -1,4 +1,5 @@
 const int MAX_SIZE = 1000;
+const int MAX_ANIMATION_SPEED = 2000;
 
 enum SortingType {
   BUBBLE_SORT,
