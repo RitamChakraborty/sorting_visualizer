@@ -57,25 +57,24 @@ class SortingPage extends StatelessWidget {
       color: Colors.white,
       onPressed: null,
       disabledBorderColor: Theme.of(context).accentColor,
-      child: Container(
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            value: value,
-            onChanged: (String value) {
-              sortingProvider.changeSortingTypeSelection(
-                  sortingType: getSortingType(value: value));
-            },
-            items: SortingType.values
-                .map(
-                  (SortingType sortingType) => DropdownMenuItem<String>(
-                value: getSortingTypeString(sortingTypes: sortingType),
-                child: Text(
-                  getSortingTypeString(sortingTypes: sortingType),
-                ),
+      shape: SHAPE,
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: value,
+          onChanged: (String value) {
+            sortingProvider.changeSortingTypeSelection(
+                sortingType: getSortingType(value: value));
+          },
+          items: SortingType.values
+              .map(
+                (SortingType sortingType) => DropdownMenuItem<String>(
+              value: getSortingTypeString(sortingTypes: sortingType),
+              child: Text(
+                getSortingTypeString(sortingTypes: sortingType),
               ),
-            )
-                .toList(),
-          ),
+            ),
+          )
+              .toList(),
         ),
       ),
     );
@@ -85,6 +84,7 @@ class SortingPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: MaterialButton(
           color: Theme.of(context).accentColor,
+          shape: SHAPE,
           onPressed: () async {
             await onPressed();
           },
