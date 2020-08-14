@@ -72,13 +72,13 @@ class SortingPage extends StatelessWidget {
 
     Widget button({@required String text, @required Function onPressed}) {
       return Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: MaterialButton(
-          color: Theme.of(context).buttonColor,
+          color: Theme.of(context).accentColor,
           onPressed: () async {
             await onPressed();
           },
-          child: Text(text),
+          child: Text(text, style: TextStyle(color: Colors.white),),
         ),
       );
     }
@@ -106,14 +106,21 @@ class SortingPage extends StatelessWidget {
     return Material(
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: dropDownButton,
-          actions: [sortButton, resetButton],
         ),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              animationSpeedSlider,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  resetButton,
+                  Expanded(child: animationSpeedSlider),
+                  sortButton,
+                ],
+              ),
               Expanded(
                 child: Container(
                   alignment: Alignment.bottomLeft,
