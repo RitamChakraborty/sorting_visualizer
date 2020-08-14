@@ -92,9 +92,9 @@ class SortingProvider extends ChangeNotifier {
       }
 
       await Future.delayed(Duration(
-          milliseconds: _animationSpeed.toInt() > 100
-              ? _animationSpeed.toInt() - 100
-              : 0));
+        milliseconds:
+            _animationSpeed.toInt() > 100 ? _animationSpeed.toInt() - 100 : 0,
+      ));
     }
   }
 

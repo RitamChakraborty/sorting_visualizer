@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
 import 'package:sortingvisualizer/utils/utils.dart';
+import 'package:sortingvisualizer/widgets/rounded_button.dart';
 
 class SortingPage extends StatelessWidget {
   @override
@@ -68,28 +69,23 @@ class SortingPage extends StatelessWidget {
           items: SortingType.values
               .map(
                 (SortingType sortingType) => DropdownMenuItem<String>(
-              value: getSortingTypeString(sortingTypes: sortingType),
-              child: Text(
-                getSortingTypeString(sortingTypes: sortingType),
-              ),
-            ),
-          )
+                  value: getSortingTypeString(sortingTypes: sortingType),
+                  child: Text(
+                    getSortingTypeString(sortingTypes: sortingType),
+                  ),
+                ),
+              )
               .toList(),
         ),
       ),
     );
 
     Widget button({@required String text, @required Function onPressed}) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: MaterialButton(
-          color: Theme.of(context).accentColor,
-          shape: SHAPE,
-          onPressed: () async {
-            await onPressed();
-          },
-          child: Text(text, style: TextStyle(color: Colors.white),),
-        ),
+      return RoundedButton(
+        text: text,
+        onPressed: () async {
+          await onPressed();
+        },
       );
     }
 

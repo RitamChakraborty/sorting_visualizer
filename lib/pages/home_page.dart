@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sortingvisualizer/pages/sorting_page.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
+import 'package:sortingvisualizer/widgets/rounded_button.dart';
 
 class HomePage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -87,14 +88,10 @@ class HomePage extends StatelessWidget {
                     children: [
                       form,
                       SizedBox(height: 48),
-                      MaterialButton(
+                      RoundedButton(
+                        text: "Visualize",
                         onPressed: visualizeButtonOnPress,
-                        color: Theme.of(context).accentColor,
-                        child: Text(
-                          "Visualize",
-                          style: Theme.of(context).textTheme.button,
-                        ),
-                      )
+                      ),
                     ],
                   ),
                 ),
