@@ -21,6 +21,9 @@ class SortingPage extends StatelessWidget {
     String value =
         getSortingTypeString(sortingTypes: sortingProvider.selectedSortingType);
     double animationSpeed = sortingProvider.animationSpeed;
+    int swapI = sortingProvider.swapI;
+    int swapJ = sortingProvider.swapJ;
+    bool swapping = swapI != swapJ;
 
     int height = MediaQuery.of(context).size.height.toInt();
     int width = MediaQuery.of(context).size.width.toInt();
@@ -33,21 +36,31 @@ class SortingPage extends StatelessWidget {
         .map((int value) => ((height - 150) * (value / MAX_SIZE) + 10))
         .toList();
 
-    List<double> widthArr =
+    List<double> marginArr =
         indexArr.map((int value) => (barMargin + (division * value))).toList();
 
-    Widget bar({@required double height, @required double width}) {
+    Widget bar({@required double height, @required double width, Color color}) {
       return Bar(
         height: height,
-        width: width,
+        margin: width,
         barWidth: barWidth,
         animationSpeed: animationSpeed.toInt(),
+        color: color,
       );
     }
 
     /// Generating the bars
-    List<Widget> children = List<Widget>.generate(n,
-        (int index) => bar(height: heightArr[index], width: widthArr[index]));
+    List<Widget> children = List<Widget>.generate(
+        n,
+        (int index) => bar(
+              height: heightArr[index],
+              width: marginArr[index],
+              color: swapping
+                  ? index == swapI
+                      ? Colors.red
+                      : index == swapJ ? Colors.green : null
+                  : null,
+            ));
 
     Widget dropDownButton = SortingDropdown(
       value: value,

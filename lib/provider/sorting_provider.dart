@@ -9,6 +9,8 @@ class SortingProvider extends ChangeNotifier {
   final List<int> _indexArr;
   double _animationSpeed = 0;
   bool _stopSort = false;
+  int _swapI = 0;
+  int _swapJ = 0;
 
   SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
 
@@ -35,6 +37,9 @@ class SortingProvider extends ChangeNotifier {
 
   double get animationSpeed => _animationSpeed;
 
+  int get swapI => _swapI;
+  int get swapJ => _swapJ;
+
   void changeSortingTypeSelection({@required SortingType sortingType}) {
     this._selectedSortingType = sortingType;
     notifyListeners();
@@ -43,6 +48,8 @@ class SortingProvider extends ChangeNotifier {
   void reset() {
     /// Stop sorting
     _stopSort = true;
+    _swapI = 0;
+    _swapJ = 0;
     notifyListeners();
 
     /// Reset the main array which is being sorted
@@ -95,6 +102,9 @@ class SortingProvider extends ChangeNotifier {
           int _indexJ = _backupArray.indexOf(_arr[j]);
           _indexArr[_indexI] = i;
           _indexArr[_indexJ] = j;
+          _swapI = _indexI;
+          _swapJ = _indexJ;
+
           notifyListeners();
 
           await Future.delayed(Duration(
@@ -110,6 +120,10 @@ class SortingProvider extends ChangeNotifier {
             _animationSpeed.toInt() > 100 ? _animationSpeed.toInt() - 100 : 0,
       ));
     }
+
+    _swapI = 0;
+    _swapJ = 0;
+    notifyListeners();
   }
 
   Future<void> _insertionSort() async {}
