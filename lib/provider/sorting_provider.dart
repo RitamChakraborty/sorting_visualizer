@@ -7,7 +7,7 @@ class SortingProvider extends ChangeNotifier {
   final List<int> _arr;
   final List<int> _backupArray;
   final List<int> _indexArr;
-  double _animationSpeed = 1000;
+  double _animationSpeed = 0;
   bool _stopSort = false;
 
   SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
