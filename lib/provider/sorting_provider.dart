@@ -8,6 +8,7 @@ class SortingProvider extends ChangeNotifier {
   final List<int> _backupArray;
   final List<int> _indexArr;
   double _animationSpeed = 1000;
+  bool _stopSort = false;
 
   SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
 
@@ -40,6 +41,10 @@ class SortingProvider extends ChangeNotifier {
   }
 
   void reset() {
+    /// Stop sorting
+    _stopSort = true;
+    notifyListeners();
+
     /// Reset the main array which is being sorted
     _arr.clear();
     _arr.addAll(_backupArray);
@@ -52,6 +57,8 @@ class SortingProvider extends ChangeNotifier {
   }
 
   Future<void> sort() {
+    _stopSort = false;
+
     switch (_selectedSortingType) {
       case SortingType.BUBBLE_SORT:
         return _bubbleSort();
@@ -61,7 +68,6 @@ class SortingProvider extends ChangeNotifier {
         return _selectionSort();
       case SortingType.MERGE_SORT:
         return _mergeSort();
-        break;
       case SortingType.QUICK_SORT:
         return _quickSort();
     }
@@ -71,7 +77,15 @@ class SortingProvider extends ChangeNotifier {
 
   Future<void> _bubbleSort() async {
     for (int i = 0; i < _size; ++i) {
+      if (_stopSort) {
+        return;
+      }
+
       for (int j = (i + 1); j < _size; ++j) {
+        if (_stopSort) {
+          return;
+        }
+
         if (_arr[i] > _arr[j]) {
           int temp = _arr[i];
           _arr[i] = _arr[j];
