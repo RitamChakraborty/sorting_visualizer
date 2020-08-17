@@ -6,10 +6,18 @@ import 'package:flutter/material.dart';
 class HomePageConcept extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Widget digitButton({@required Widget child}) {
+    Widget button({@required Widget child, @required String value}) {
       return Expanded(
         child: MaterialButton(
-          onPressed: () {},
+          onPressed: () {
+            if (value == "g") {
+              // Next page
+            } else if (value == "b") {
+              // Backspace
+            } else {
+              // Add
+            }
+          },
           shape: ContinuousRectangleBorder(
               borderRadius: BorderRadius.all(Radius.zero),
               side: BorderSide(
@@ -95,36 +103,36 @@ class HomePageConcept extends StatelessWidget {
                     Expanded(
                       child: Row(
                         children: [
-                          digitButton(child: text("1")),
-                          digitButton(child: text("2")),
-                          digitButton(child: text("3")),
+                          button(child: text("1"), value: "1"),
+                          button(child: text("2"), value: "2"),
+                          button(child: text("3"), value: "3"),
                         ],
                       ),
                     ),
                     Expanded(
                       child: Row(
                         children: [
-                          digitButton(child: text("4")),
-                          digitButton(child: text("5")),
-                          digitButton(child: text("6")),
+                          button(child: text("4"), value: "4"),
+                          button(child: text("5"), value: "5"),
+                          button(child: text("6"), value: "6"),
                         ],
                       ),
                     ),
                     Expanded(
                       child: Row(
                         children: [
-                          digitButton(child: text("7")),
-                          digitButton(child: text("8")),
-                          digitButton(child: text("9")),
+                          button(child: text("7"), value: "7"),
+                          button(child: text("8"), value: "8"),
+                          button(child: text("9"), value: "9"),
                         ],
                       ),
                     ),
                     Expanded(
                       child: Row(
                         children: [
-                          digitButton(child: Icon(Icons.backspace)),
-                          digitButton(child: text("0")),
-                          digitButton(child: goIcon),
+                          button(child: Icon(Icons.backspace), value: "b"),
+                          button(child: text("0"), value: "1"),
+                          button(child: goIcon, value: "g"),
                         ],
                       ),
                     ),
