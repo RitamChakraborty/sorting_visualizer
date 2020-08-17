@@ -10,6 +10,7 @@ class HomePageConcept extends StatefulWidget {
 
 class _HomePageConceptState extends State<HomePageConcept> {
   String bars = "100";
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +20,34 @@ class _HomePageConceptState extends State<HomePageConcept> {
           onPressed: () {
             setState(() {
               if (value == "g") {
-                // Next page
+                if (bars.isNotEmpty) {
+                  int barCount = int.parse(bars);
+
+                  if (barCount < 2) {
+                    error = "Minimum number is 2";
+                  } else if (barCount >= 1000) {
+                    error = "Maximum number is 999";
+                  } else {
+                    // Next page
+                  }
+                } else {
+                  error = "Minimum number is 2";
+                }
               } else if (value == "b") {
+                error = "";
+
                 if (bars.length > 1) {
                   bars = bars.substring(0, bars.length - 1);
                 } else {
                   bars = "";
                 }
               } else {
-                bars += value;
+                if (bars.length < 3) {
+                  error = "";
+                  bars += value;
+                } else {
+                  error = "Maximum number is 999";
+                }
               }
             });
           },
@@ -98,7 +118,7 @@ class _HomePageConceptState extends State<HomePageConcept> {
                         height: 2,
                       ),
                       Text(
-                        "Number of bars has to be less than 1000",
+                        error,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Theme.of(context).errorColor,
