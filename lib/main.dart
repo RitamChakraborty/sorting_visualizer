@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.blueAccent,
         buttonColor: Colors.blueAccent,
       ),
-      themeMode: ThemeMode.light,
-      home: HomePage(),
+      themeMode: ThemeMode.dark,
+      home: HomePageConcept(),
     );
   }
 }

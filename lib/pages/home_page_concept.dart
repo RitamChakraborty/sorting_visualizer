@@ -20,15 +20,13 @@ class HomePageConcept extends StatelessWidget {
       );
     }
 
-    Widget text(String text) => Text(
-          text,
-          style:
-              TextStyle(fontSize: 20.0, color: Theme.of(context).accentColor),
-        );
+    Widget text(String text) => Text(text, style: TextStyle(fontSize: 20.0));
+
     Widget goIcon = Text(
       "Visualize",
       style: TextStyle(
-        fontSize: 24,
+        color: Theme.of(context).accentColor,
+        fontSize: 20,
         fontStyle: FontStyle.italic,
       ),
     );
