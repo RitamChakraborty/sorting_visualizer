@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePageConcept extends StatelessWidget {
@@ -24,6 +25,14 @@ class HomePageConcept extends StatelessWidget {
           style:
               TextStyle(fontSize: 20.0, color: Theme.of(context).accentColor),
         );
+    Widget goIcon = Text(
+      "Visualize",
+      style: TextStyle(
+        fontSize: 24,
+        fontStyle: FontStyle.italic,
+      ),
+    );
+
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -44,7 +53,41 @@ class HomePageConcept extends StatelessWidget {
           children: [
             Flexible(
               flex: 1,
-              child: Container(),
+              child: Center(
+                child: Container(
+                  width: 150,
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Enter number of bars",
+                          style: TextStyle(
+                            color: Theme.of(context).hintColor,
+                          )),
+                      Text(
+                        "",
+                        style: TextStyle(
+                          letterSpacing: 5,
+                          fontSize: 48.0,
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(8.0),
+                        width: double.infinity,
+                        color: Theme.of(context).accentColor,
+                        height: 2,
+                      ),
+                      Text(
+                        "Number of bars has to be less than 1000",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Theme.of(context).errorColor,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
             Flexible(
               flex: 1,
@@ -83,7 +126,7 @@ class HomePageConcept extends StatelessWidget {
                         children: [
                           digitButton(child: Icon(Icons.backspace)),
                           digitButton(child: text("0")),
-                          digitButton(child: Icon(Icons.forward)),
+                          digitButton(child: goIcon),
                         ],
                       ),
                     ),
