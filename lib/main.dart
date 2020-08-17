@@ -15,9 +15,13 @@ class MyApp extends StatelessWidget {
           button: TextStyle(color: Colors.white),
         ),
       ),
-      darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.dark,
-      home: HomePageConcept(),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        accentColor: Colors.blueAccent,
+        buttonColor: Colors.blueAccent,
+      ),
+      themeMode: ThemeMode.light,
+      home: HomePage(),
     );
   }
 }
