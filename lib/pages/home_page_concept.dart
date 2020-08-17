@@ -3,26 +3,27 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class HomePageConcept extends StatelessWidget {
-  Widget digitButton({@required Widget child}) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.grey[100], border: Border.all(color: Colors.grey)),
-        alignment: Alignment.center,
-        child: child,
-      ),
-    );
-  }
-  
-  Widget text(String text) => Text(
-    text,
-    style: TextStyle(
-      fontSize: 20.0
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
+    Widget digitButton({@required Widget child}) {
+      return Expanded(
+        child: MaterialButton(
+          onPressed: () {},
+          shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.zero),
+              side: BorderSide(
+                color: Theme.of(context).dividerColor,
+              )),
+          child: Center(child: child),
+        ),
+      );
+    }
+
+    Widget text(String text) => Text(
+          text,
+          style:
+              TextStyle(fontSize: 20.0, color: Theme.of(context).accentColor),
+        );
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -32,7 +33,9 @@ class HomePageConcept extends StatelessWidget {
           title: Text(
             "Sorting Visualizer",
             style: TextStyle(
-              color: Colors.grey[800],
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey.shade800
+                  : Colors.grey.shade100,
             ),
           ),
         ),
