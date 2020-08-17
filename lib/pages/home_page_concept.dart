@@ -118,7 +118,7 @@ class _HomePageConceptState extends State<HomePageConcept> {
               flex: 1,
               child: Center(
                 child: Container(
-                  width: 150,
+                  width: 200,
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
