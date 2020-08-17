@@ -2,6 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sortingvisualizer/data/constants.dart';
+import 'package:sortingvisualizer/pages/sorting_page.dart';
+import 'package:sortingvisualizer/provider/sorting_provider.dart';
 
 class HomePageConcept extends StatefulWidget {
   @override
@@ -28,7 +32,26 @@ class _HomePageConceptState extends State<HomePageConcept> {
                   } else if (barCount >= 1000) {
                     error = "Maximum number is 999";
                   } else {
-                    // Next page
+                    Set<int> arr = Set();
+
+                    /// Creating set to prevent same digit
+                    for (int i = 0; arr.length < barCount; ++i) {
+                      int random = Random().nextInt(MAX_SIZE);
+                      arr.add(random);
+                    }
+
+                    List<int> list = arr.toList();
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                        ChangeNotifierProvider<SortingProvider>.value(
+                          value: SortingProvider(size: barCount, array: list),
+                          child: SortingPage(),
+                        ),
+                      ),
+                    );
                   }
                 } else {
                   error = "Minimum number is 2";
@@ -165,7 +188,7 @@ class _HomePageConceptState extends State<HomePageConcept> {
                       child: Row(
                         children: [
                           button(child: Icon(Icons.backspace), value: "b"),
-                          button(child: text("0"), value: "1"),
+                          button(child: text("0"), value: "0"),
                           button(child: goIcon, value: "g"),
                         ],
                       ),

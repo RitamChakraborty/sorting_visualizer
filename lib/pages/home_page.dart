@@ -40,27 +40,7 @@ class HomePage extends StatelessWidget {
 
     void visualizeButtonOnPress() {
       if (_key.currentState.validate()) {
-        int size = int.parse(_controller.text);
-        Set<int> arr = Set();
 
-        /// Creating set to prevent same digit
-        for (int i = 0; arr.length < size; ++i) {
-          int random = Random().nextInt(MAX_SIZE);
-          arr.add(random);
-        }
-
-        List<int> list = arr.toList();
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) =>
-                ChangeNotifierProvider<SortingProvider>.value(
-              value: SortingProvider(size: size, array: list),
-              child: SortingPage(),
-            ),
-          ),
-        );
       }
     }
 
