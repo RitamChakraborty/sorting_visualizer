@@ -3,26 +3,40 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePageConcept extends StatelessWidget {
+class HomePageConcept extends StatefulWidget {
+  @override
+  _HomePageConceptState createState() => _HomePageConceptState();
+}
+
+class _HomePageConceptState extends State<HomePageConcept> {
+  String bars = "100";
+
   @override
   Widget build(BuildContext context) {
     Widget button({@required Widget child, @required String value}) {
       return Expanded(
         child: MaterialButton(
           onPressed: () {
-            if (value == "g") {
-              // Next page
-            } else if (value == "b") {
-              // Backspace
-            } else {
-              // Add
-            }
+            setState(() {
+              if (value == "g") {
+                // Next page
+              } else if (value == "b") {
+                if (bars.length > 1) {
+                  bars = bars.substring(0, bars.length - 1);
+                } else {
+                  bars = "";
+                }
+              } else {
+                bars += value;
+              }
+            });
           },
           shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.zero),
-              side: BorderSide(
-                color: Theme.of(context).dividerColor,
-              )),
+            borderRadius: BorderRadius.all(Radius.zero),
+            side: BorderSide(
+              color: Theme.of(context).dividerColor,
+            ),
+          ),
           child: Center(child: child),
         ),
       );
@@ -71,7 +85,7 @@ class HomePageConcept extends StatelessWidget {
                             color: Theme.of(context).hintColor,
                           )),
                       Text(
-                        "",
+                        bars,
                         style: TextStyle(
                           letterSpacing: 5,
                           fontSize: 48.0,
