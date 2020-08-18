@@ -38,7 +38,13 @@ class SortingProvider extends ChangeNotifier {
   double get animationSpeed => _animationSpeed;
 
   int get swapI => _swapI;
+
   int get swapJ => _swapJ;
+
+  Future<dynamic> get _delay => Future.delayed(Duration(
+        milliseconds:
+            _animationSpeed.toInt() == 0 ? 0 : _animationSpeed.toInt() + 100,
+      ));
 
   void changeSortingTypeSelection({@required SortingType sortingType}) {
     this._selectedSortingType = sortingType;
@@ -107,18 +113,11 @@ class SortingProvider extends ChangeNotifier {
 
           notifyListeners();
 
-          await Future.delayed(Duration(
-            milliseconds: _animationSpeed.toInt() == 0
-                ? 0
-                : _animationSpeed.toInt() + 100,
-          ));
+          await _delay;
         }
       }
 
-      await Future.delayed(Duration(
-        milliseconds:
-            _animationSpeed.toInt() > 100 ? _animationSpeed.toInt() - 100 : 0,
-      ));
+      await _delay;
     }
 
     _swapI = 0;
