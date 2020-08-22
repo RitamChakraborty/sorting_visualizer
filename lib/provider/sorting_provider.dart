@@ -125,7 +125,40 @@ class SortingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _insertionSort() async {}
+  Future<void> _insertionSort() async {
+    for (int i = 0; i < _size; ++i) {
+      if (_stopSort) {
+        return;
+      }
+
+      int temp = _arr[i];
+      int indexI = _backupArray.indexOf(_arr[i]);
+      int j = i - 1;
+
+      while (j >= 0 && _arr[j] > temp) {
+        if (_stopSort) {
+          return;
+        }
+
+        int indexJ = _backupArray.indexOf(_arr[j]);
+        _indexArr[indexJ] = j + 1;
+
+        _arr[j + 1] = _arr[j];
+        --j;
+
+        notifyListeners();
+        await _delay;
+      }
+
+      _indexArr[indexI] = j + 1;
+      _arr[j + 1] = temp;
+
+      notifyListeners();
+      await _delay;
+    }
+
+    notifyListeners();
+  }
 
   Future<void> _selectionSort() async {}
 
