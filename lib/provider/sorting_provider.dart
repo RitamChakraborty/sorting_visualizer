@@ -100,19 +100,18 @@ class SortingProvider extends ChangeNotifier {
         }
 
         if (_arr[i] > _arr[j]) {
+          int _indexI = _backupArray.indexOf(_arr[i]);
+          int _indexJ = _backupArray.indexOf(_arr[j]);
+          _indexArr[_indexI] = j;
+          _indexArr[_indexJ] = i;
+          _swapI = _indexI;
+          _swapJ = _indexJ;
+
           int temp = _arr[i];
           _arr[i] = _arr[j];
           _arr[j] = temp;
 
-          int _indexI = _backupArray.indexOf(_arr[i]);
-          int _indexJ = _backupArray.indexOf(_arr[j]);
-          _indexArr[_indexI] = i;
-          _indexArr[_indexJ] = j;
-          _swapI = _indexI;
-          _swapJ = _indexJ;
-
           notifyListeners();
-
           await _delay;
         }
       }
@@ -160,7 +159,45 @@ class SortingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _selectionSort() async {}
+  Future<void> _selectionSort() async {
+    for (int i = 0; i < _size; ++i) {
+      if (_stopSort) {
+        return;
+      }
+
+      int smallest = _arr[i];
+      int smallestIndex = i;
+
+      for (int j = (i + 1); j < _size; ++j) {
+        if (_stopSort) {
+          return;
+        }
+
+        if (_arr[j] < smallest) {
+          smallestIndex = j;
+          smallest = _arr[j];
+        }
+      }
+
+      int _indexI = _backupArray.indexOf(_arr[i]);
+      int _indexJ = _backupArray.indexOf(_arr[smallestIndex]);
+      _indexArr[_indexI] = smallestIndex;
+      _indexArr[_indexJ] = i;
+      _swapI = _indexI;
+      _swapJ = _indexJ;
+
+      int temp = _arr[i];
+      _arr[i] = _arr[smallestIndex];
+      _arr[smallestIndex] = temp;
+
+      notifyListeners();
+      await _delay;
+    }
+
+    _swapI = 0;
+    _swapJ = 0;
+    notifyListeners();
+  }
 
   Future<void> _mergeSort() async {}
 

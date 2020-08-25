@@ -13,7 +13,7 @@ class HomePageConcept extends StatefulWidget {
 }
 
 class _HomePageConceptState extends State<HomePageConcept> {
-  String bars = "100";
+  String bars = "10";
   String error = "";
 
   @override
