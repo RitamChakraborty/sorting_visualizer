@@ -80,7 +80,7 @@ class SortingProvider extends ChangeNotifier {
       case SortingType.SELECTION_SORT:
         return _selectionSort();
       case SortingType.MERGE_SORT:
-        return _mergeSort();
+        return _mergeSort(0, _size - 1);
       case SortingType.QUICK_SORT:
         return _quickSort();
     }
@@ -199,7 +199,57 @@ class SortingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _mergeSort() async {}
+  Future<void> _mergeSort(int start, int end) async {
+    if (_stopSort) {
+      return;
+    }
+
+    if (start < end) {
+      int mid = (start + end) ~/ 2;
+
+      _mergeSort(start, mid);
+      _mergeSort(mid + 1, end);
+
+      _merge(start, mid, end);
+    }
+  }
+
+  Future<void> _merge(int start, int mid, int end) async {
+    int m = (mid - start) + 1;
+    int n = (end - mid);
+
+    List<int> arr1 = List(m);
+    List<int> arr2 = List(n);
+
+    int i, j, k = start;
+
+    for (i = 0; i < m; ++i) {
+      arr1[i] = _arr[k++];
+    }
+
+    for (j = 0; j < n; ++j) {
+      arr2[j] = _arr[k++];
+    }
+
+    i = j = 0;
+    k = start;
+
+    while (i != m && j != n) {
+      if (arr1[i] < arr2[j]) {
+        _arr[k++] = arr1[i++];
+      } else {
+        _arr[k++] = arr2[j++];
+      }
+    }
+
+    while (i != m) {
+      _arr[k++] = arr1[i++];
+    }
+
+    while (j != n) {
+      _arr[k++] = arr2[j++];
+    }
+  }
 
   Future<void> _quickSort() async {}
 }
