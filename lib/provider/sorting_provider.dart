@@ -212,6 +212,10 @@ class SortingProvider extends ChangeNotifier {
 
       await _merge(start, mid, end);
     }
+
+    _swapI = 0;
+    _swapJ = 0;
+    notifyListeners();
   }
 
   Future<void> _merge(int start, int mid, int end) async {
@@ -228,27 +232,29 @@ class SortingProvider extends ChangeNotifier {
     int i, j, k = start;
 
     for (i = 0; i < m; ++i) {
-      arr1[i] = _arr[k++];
-    }
-
-    for (j = 0; j < n; ++j) {
-      arr2[j] = _arr[k++];
-    }
-
-    i = j = 0;
-    k = start;
-
-    for (int l = start; l <= end; ++l) {
-      if (_stopSort) {
-        return;
-      }
-
-      int _index = _backupArray.indexOf(_arr[l]);
+      int _index = _backupArray.indexOf(_arr[k]);
+      _swapI = _index;
       _indexArr[_index] = start;
+
+      arr1[i] = _arr[k++];
 
       await _delay;
       notifyListeners();
     }
+
+    for (j = 0; j < n; ++j) {
+      int _index = _backupArray.indexOf(_arr[k]);
+      _swapJ = _index;
+      _indexArr[_index] = end;
+
+      arr2[j] = _arr[k++];
+
+      await _delay;
+      notifyListeners();
+    }
+
+    i = j = 0;
+    k = start;
 
     while (i != m && j != n) {
       if (_stopSort) {
@@ -259,11 +265,13 @@ class SortingProvider extends ChangeNotifier {
 
       if (arr1[i] < arr2[j]) {
         _index = _backupArray.indexOf(arr1[i]);
+        _swapI = _index;
         _indexArr[_index] = k;
 
         _arr[k++] = arr1[i++];
       } else {
         _index = _backupArray.indexOf(arr2[j]);
+        _swapJ = _index;
         _indexArr[_index] = k;
 
         _arr[k++] = arr2[j++];
@@ -279,6 +287,7 @@ class SortingProvider extends ChangeNotifier {
       }
 
       int _index = _backupArray.indexOf(arr1[i]);
+      _swapI = _index;
       _indexArr[_index] = k;
 
       _arr[k++] = arr1[i++];
@@ -293,6 +302,7 @@ class SortingProvider extends ChangeNotifier {
       }
 
       int _index = _backupArray.indexOf(arr2[j]);
+      _swapJ = _index;
       _indexArr[_index] = k;
 
       _arr[k++] = arr2[j++];
@@ -300,6 +310,9 @@ class SortingProvider extends ChangeNotifier {
       await _delay;
       notifyListeners();
     }
+
+    _swapI = 0;
+    _swapJ = 0;
   }
 
   Future<void> _quickSort() async {}
