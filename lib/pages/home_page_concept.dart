@@ -26,6 +26,7 @@ class _HomePageConceptState extends State<HomePageConcept> {
               if (value == "g") {
                 if (bars.isNotEmpty) {
                   int barCount = int.parse(bars);
+                  // int barCount = 6;
 
                   if (barCount < 2) {
                     error = "Minimum number is 2";
@@ -41,6 +42,7 @@ class _HomePageConceptState extends State<HomePageConcept> {
                     }
 
                     List<int> list = arr.toList();
+                    // List<int> list = [700, 900, 500, 300, 400, 100];
 
                     Navigator.push(
                       context,

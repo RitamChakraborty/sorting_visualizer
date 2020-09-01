@@ -207,14 +207,18 @@ class SortingProvider extends ChangeNotifier {
     if (start < end) {
       int mid = (start + end) ~/ 2;
 
-      _mergeSort(start, mid);
-      _mergeSort(mid + 1, end);
+      await _mergeSort(start, mid);
+      await _mergeSort(mid + 1, end);
 
-      _merge(start, mid, end);
+      await _merge(start, mid, end);
     }
   }
 
   Future<void> _merge(int start, int mid, int end) async {
+    if (_stopSort) {
+      return;
+    }
+
     int m = (mid - start) + 1;
     int n = (end - mid);
 
@@ -234,20 +238,67 @@ class SortingProvider extends ChangeNotifier {
     i = j = 0;
     k = start;
 
+    for (int l = start; l <= end; ++l) {
+      if (_stopSort) {
+        return;
+      }
+
+      int _index = _backupArray.indexOf(_arr[l]);
+      _indexArr[_index] = start;
+
+      await _delay;
+      notifyListeners();
+    }
+
     while (i != m && j != n) {
+      if (_stopSort) {
+        return;
+      }
+
+      int _index;
+
       if (arr1[i] < arr2[j]) {
+        _index = _backupArray.indexOf(arr1[i]);
+        _indexArr[_index] = k;
+
         _arr[k++] = arr1[i++];
       } else {
+        _index = _backupArray.indexOf(arr2[j]);
+        _indexArr[_index] = k;
+
         _arr[k++] = arr2[j++];
       }
+
+      await _delay;
+      notifyListeners();
     }
 
     while (i != m) {
+      if (_stopSort) {
+        return;
+      }
+
+      int _index = _backupArray.indexOf(arr1[i]);
+      _indexArr[_index] = k;
+
       _arr[k++] = arr1[i++];
+
+      await _delay;
+      notifyListeners();
     }
 
     while (j != n) {
+      if (_stopSort) {
+        return;
+      }
+
+      int _index = _backupArray.indexOf(arr2[j]);
+      _indexArr[_index] = k;
+
       _arr[k++] = arr2[j++];
+
+      await _delay;
+      notifyListeners();
     }
   }
 
