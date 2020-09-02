@@ -187,19 +187,7 @@ class SortingProvider extends ChangeNotifier {
         }
       }
 
-      int _indexI = _backupArray.indexOf(_arr[i]);
-      int _indexJ = _backupArray.indexOf(_arr[smallestIndex]);
-      _indexArr[_indexI] = smallestIndex;
-      _indexArr[_indexJ] = i;
-      _swapI = _indexI;
-      _swapJ = _indexJ;
-
-      int temp = _arr[i];
-      _arr[i] = _arr[smallestIndex];
-      _arr[smallestIndex] = temp;
-
-      notifyListeners();
-      await _delay;
+      await _swap(i, smallestIndex);
     }
 
     _swapI = 0;
