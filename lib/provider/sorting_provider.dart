@@ -240,25 +240,11 @@ class SortingProvider extends ChangeNotifier {
     int i, j, k = start;
 
     for (i = 0; i < m; ++i) {
-      int _index = _backupArray.indexOf(_arr[k]);
-      _swapI = _index;
-      _indexArr[_index] = start;
-
       arr1[i] = _arr[k++];
-
-      await _delay;
-      notifyListeners();
     }
 
     for (j = 0; j < n; ++j) {
-      int _index = _backupArray.indexOf(_arr[k]);
-      _swapJ = _index;
-      _indexArr[_index] = end;
-
       arr2[j] = _arr[k++];
-
-      await _delay;
-      notifyListeners();
     }
 
     i = j = 0;
