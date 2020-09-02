@@ -120,19 +120,7 @@ class SortingProvider extends ChangeNotifier {
         }
 
         if (_arr[i] > _arr[j]) {
-          int _indexI = _backupArray.indexOf(_arr[i]);
-          int _indexJ = _backupArray.indexOf(_arr[j]);
-          _swapI = _indexI;
-          _swapJ = _indexJ;
-          _indexArr[_indexI] = j;
-          _indexArr[_indexJ] = i;
-
-          int temp = _arr[i];
-          _arr[i] = _arr[j];
-          _arr[j] = temp;
-
-          notifyListeners();
-          await _delay;
+          await _swap(i, j);
         }
       }
 
