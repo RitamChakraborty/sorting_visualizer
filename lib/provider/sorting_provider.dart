@@ -82,10 +82,30 @@ class SortingProvider extends ChangeNotifier {
       case SortingType.MERGE_SORT:
         return _mergeSort(0, _size - 1);
       case SortingType.QUICK_SORT:
-        return _quickSort();
+        return _quickSort(0, _size - 1);
     }
 
     return null;
+  }
+
+  Future<void> _swap(int i , int j) async {
+    if (_stopSort) {
+      return;
+    }
+
+    int _indexI = _backupArray.indexOf(_arr[i]);
+    int _indexJ = _backupArray.indexOf(_arr[j]);
+    _swapI = _indexI;
+    _swapJ = _indexJ;
+    _indexArr[_indexI] = j;
+    _indexArr[_indexJ] = i;
+
+    int temp = _arr[i];
+    _arr[i] = _arr[j];
+    _arr[j] = temp;
+
+    notifyListeners();
+    await _delay;
   }
 
   Future<void> _bubbleSort() async {
@@ -102,10 +122,10 @@ class SortingProvider extends ChangeNotifier {
         if (_arr[i] > _arr[j]) {
           int _indexI = _backupArray.indexOf(_arr[i]);
           int _indexJ = _backupArray.indexOf(_arr[j]);
-          _indexArr[_indexI] = j;
-          _indexArr[_indexJ] = i;
           _swapI = _indexI;
           _swapJ = _indexJ;
+          _indexArr[_indexI] = j;
+          _indexArr[_indexJ] = i;
 
           int temp = _arr[i];
           _arr[i] = _arr[j];
@@ -315,5 +335,40 @@ class SortingProvider extends ChangeNotifier {
     _swapJ = 0;
   }
 
-  Future<void> _quickSort() async {}
+  Future<void> _quickSort(int start, int end) async {
+    if (_stopSort) {
+      return;
+    }
+
+    if (start < end) {
+      int pIndex = await _partition(start, end);
+
+      await _quickSort(start, pIndex - 1);
+      await _quickSort(pIndex + 1, end);
+    }
+  }
+
+  Future<int> _partition(int start, int end) async {
+    int pivot = _arr[end];
+    int pIndex = start;
+
+    for (int i = start; i < end; ++i) {
+      if (_stopSort) {
+        break;
+      }
+
+      if (_arr[i] <= pivot) {
+       await _swap(i, pIndex);
+        ++pIndex;
+      }
+    }
+
+    await _swap(pIndex, end);
+
+    _swapI = 0;
+    _swapJ = 0;
+    notifyListeners();
+    
+    return pIndex;
+  }
 }
