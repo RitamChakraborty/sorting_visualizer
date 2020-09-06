@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sortingvisualizer/pages/home_page.dart';
-import 'package:sortingvisualizer/pages/home_page_concept.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         buttonColor: Colors.blueAccent,
       ),
       themeMode: ThemeMode.dark,
-      home: HomePageConcept(),
+      home: HomePage(),
     );
   }
 }

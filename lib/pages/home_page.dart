@@ -1,85 +1,205 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:sortingvisualizer/pages/sorting_page.dart';
 import 'package:sortingvisualizer/data/constants.dart';
+import 'package:sortingvisualizer/pages/sorting_page.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
-import 'package:sortingvisualizer/widgets/rounded_button.dart';
 
-class HomePage extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-  String _inputValidator(String input) {
-    int value = int.parse(input);
-
-    if (value < 2) {
-      return "Number of bars have to be greater than 2";
-    } else if (value > 999) {
-      return "Number of bars have to be less than 999";
-    }
-
-    return null;
-  }
+class _HomePageState extends State<HomePage> {
+  String bars = "10";
+  String error = "";
 
   @override
   Widget build(BuildContext context) {
-    Widget form = Form(
-      key: _key,
-      child: TextFormField(
-        validator: _inputValidator,
-        controller: _controller,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          labelText: "Number of bars",
+    Widget button({@required Widget child, @required String value}) {
+      return Expanded(
+        child: MaterialButton(
+          onPressed: () {
+            setState(() {
+              if (value == "g") {
+                if (bars.isNotEmpty) {
+                  int barCount = int.parse(bars);
+                  // int barCount = 6;
+
+                  if (barCount < 2) {
+                    error = "Minimum number is 2";
+                  } else if (barCount >= 1000) {
+                    error = "Maximum number is 999";
+                  } else {
+                    Set<int> arr = Set();
+
+                    /// Creating set to prevent same digit
+                    for (int i = 0; arr.length < barCount; ++i) {
+                      int random = Random().nextInt(MAX_SIZE);
+                      arr.add(random);
+                    }
+
+                    List<int> list = arr.toList();
+                    // List<int> list = [700, 900, 500, 300, 400, 100];
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                        ChangeNotifierProvider<SortingProvider>.value(
+                          value: SortingProvider(size: barCount, array: list),
+                          child: SortingPage(),
+                        ),
+                      ),
+                    );
+                  }
+                } else {
+                  error = "Minimum number is 2";
+                }
+              } else if (value == "b") {
+                error = "";
+
+                if (bars.length > 1) {
+                  bars = bars.substring(0, bars.length - 1);
+                } else {
+                  bars = "";
+                }
+              } else {
+                if (bars.length < 3) {
+                  error = "";
+                  bars += value;
+                } else {
+                  error = "Maximum number is 999";
+                }
+              }
+            });
+          },
+          shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.zero),
+            side: BorderSide(
+              color: Theme.of(context).dividerColor,
+            ),
+          ),
+          child: Center(child: child),
         ),
+      );
+    }
+
+    Widget text(String text) => Text(text, style: TextStyle(fontSize: 20.0));
+
+    Widget goIcon = Text(
+      "Visualize",
+      style: TextStyle(
+        color: Theme.of(context).accentColor,
+        fontSize: 20,
+        fontStyle: FontStyle.italic,
       ),
     );
-
-    void visualizeButtonOnPress() {
-      if (_key.currentState.validate()) {
-
-      }
-    }
 
     return Material(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Sorting Visualizer"),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          centerTitle: true,
+          title: Text(
+            "Sorting Visualizer",
+            style: TextStyle(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.grey.shade800
+                  : Colors.grey.shade100,
+            ),
+          ),
         ),
-        body: SafeArea(
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              double maxWidth = constraints.maxWidth;
-              double maxHeight = constraints.maxHeight;
-              double padding;
-
-              if (maxWidth > maxHeight) {
-                padding = maxWidth * 0.1;
-              } else {
-                padding = 32.0;
-              }
-
-              return Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: padding),
-                child: SingleChildScrollView(
+        body: Flex(
+          direction: Axis.vertical,
+          children: [
+            Flexible(
+              flex: 1,
+              child: Center(
+                child: Container(
+                  width: 200,
+                  alignment: Alignment.center,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      form,
-                      SizedBox(height: 48),
-                      RoundedButton(
-                        text: "Visualize",
-                        onPressed: visualizeButtonOnPress,
+                      Text("Enter number of bars",
+                          style: TextStyle(
+                            color: Theme.of(context).hintColor,
+                          )),
+                      Text(
+                        bars,
+                        style: TextStyle(
+                          letterSpacing: 5,
+                          fontSize: 48.0,
+                        ),
                       ),
+                      Container(
+                        margin: const EdgeInsets.all(8.0),
+                        width: double.infinity,
+                        color: Theme.of(context).accentColor,
+                        height: 2,
+                      ),
+                      Text(
+                        error,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Theme.of(context).errorColor,
+                        ),
+                      )
                     ],
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          button(child: text("1"), value: "1"),
+                          button(child: text("2"), value: "2"),
+                          button(child: text("3"), value: "3"),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          button(child: text("4"), value: "4"),
+                          button(child: text("5"), value: "5"),
+                          button(child: text("6"), value: "6"),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          button(child: text("7"), value: "7"),
+                          button(child: text("8"), value: "8"),
+                          button(child: text("9"), value: "9"),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          button(child: Icon(Icons.backspace), value: "b"),
+                          button(child: text("0"), value: "0"),
+                          button(child: goIcon, value: "g"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
