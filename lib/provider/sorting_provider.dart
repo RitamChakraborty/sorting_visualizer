@@ -180,6 +180,11 @@ class SortingProvider extends ChangeNotifier {
 
       int smallest = _arr[i];
       int smallestIndex = i;
+      int _indexI = _backupArray.indexOf(smallest);
+      _swapI = _indexI;
+
+      await _delay;
+      notifyListeners();
 
       for (int j = (i + 1); j < _size; ++j) {
         if (_stopSort) {
@@ -189,6 +194,12 @@ class SortingProvider extends ChangeNotifier {
         if (_arr[j] < smallest) {
           smallestIndex = j;
           smallest = _arr[j];
+
+          int _indexJ = _backupArray.indexOf(smallest);
+          _swapJ= _indexJ;
+
+          await _delay;
+          notifyListeners();
         }
       }
 
