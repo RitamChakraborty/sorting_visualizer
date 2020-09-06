@@ -48,7 +48,7 @@ class SortingProvider extends ChangeNotifier {
 
   void changeSortingTypeSelection({@required SortingType sortingType}) {
     this._selectedSortingType = sortingType;
-    notifyListeners();
+    reset();
   }
 
   void reset() {
