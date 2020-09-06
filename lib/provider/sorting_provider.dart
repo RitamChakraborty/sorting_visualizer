@@ -140,6 +140,7 @@ class SortingProvider extends ChangeNotifier {
 
       int temp = _arr[i];
       int indexI = _backupArray.indexOf(_arr[i]);
+      _swapI = indexI;
       int j = i - 1;
 
       while (j >= 0 && _arr[j] > temp) {
@@ -148,6 +149,7 @@ class SortingProvider extends ChangeNotifier {
         }
 
         int indexJ = _backupArray.indexOf(_arr[j]);
+        _swapJ = indexJ;
         _indexArr[indexJ] = j + 1;
 
         _arr[j + 1] = _arr[j];
@@ -163,6 +165,9 @@ class SortingProvider extends ChangeNotifier {
       notifyListeners();
       await _delay;
     }
+
+    _swapI = 0;
+    _swapJ = 0;
 
     notifyListeners();
   }
