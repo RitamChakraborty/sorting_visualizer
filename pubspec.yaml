@@ -9,6 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider: any
+  flutter_bloc: any
 
 dev_dependencies:
   flutter_test:

@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
-                        ChangeNotifierProvider<SortingProvider>.value(
+                            ChangeNotifierProvider<SortingProvider>.value(
                           value: SortingProvider(size: barCount, array: list),
                           child: SortingPage(),
                         ),
@@ -125,10 +125,12 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Enter number of bars",
-                          style: TextStyle(
-                            color: Theme.of(context).hintColor,
-                          )),
+                      Text(
+                        "Enter number of bars",
+                        style: TextStyle(
+                          color: Theme.of(context).hintColor,
+                        ),
+                      ),
                       Text(
                         bars,
                         style: TextStyle(
