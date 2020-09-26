@@ -41,7 +41,7 @@ class SortingPage extends StatelessWidget {
         .toList();
 
     List<double> marginArr =
-    indexArr.map((int value) => (barMargin + (division * value))).toList();
+        indexArr.map((int value) => (barMargin + (division * value))).toList();
 
     Widget bar({@required double height, @required double width, Color color}) {
       return Bar(
@@ -56,17 +56,17 @@ class SortingPage extends StatelessWidget {
     /// Generating the bars
     List<Widget> children = List<Widget>.generate(
         n,
-            (int index) => bar(
-          height: heightArr[index],
-          width: marginArr[index],
-          color: swapping
-              ? index == swapI
-              ? Colors.red
-              : index == swapJ
-              ? Colors.green
-              : null
-              : null,
-        ));
+        (int index) => bar(
+              height: heightArr[index],
+              width: marginArr[index],
+              color: swapping
+                  ? index == swapI
+                      ? Colors.red
+                      : index == swapJ
+                          ? Colors.green
+                          : null
+                  : null,
+            ));
 
     Widget dropDownButton = SortingDropdown(
       value: value,
@@ -107,45 +107,45 @@ class SortingPage extends StatelessWidget {
 
     return BlocBuilder<ThemeBloc, ThemeMode>(
         builder: (BuildContext context, ThemeMode themeMode) {
-          Widget icon = ThemeChangingIcon(themeMode: themeMode);
+      Widget icon = ThemeChangingIcon(themeMode: themeMode);
 
-          return Material(
-            child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                title: dropDownButton,
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                actions: [
-                  IconButton(icon: icon, onPressed: themeBloc.changeTheme),
-                ],
-              ),
-              body: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return Material(
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: dropDownButton,
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            actions: [
+              IconButton(icon: icon, onPressed: themeBloc.changeTheme),
+            ],
+          ),
+          body: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        resetButton,
-                        Expanded(child: animationSpeedSlider),
-                        sortButton,
-                      ],
-                    ),
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.bottomLeft,
-                        child: Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: children,
-                        ),
-                      ),
-                    ),
+                    resetButton,
+                    Expanded(child: animationSpeedSlider),
+                    sortButton,
                   ],
                 ),
-              ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.bottomLeft,
+                    child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      children: children,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        ),
+      );
+    });
   }
 }
