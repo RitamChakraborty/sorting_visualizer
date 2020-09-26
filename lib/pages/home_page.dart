@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sortingvisualizer/bloc/input_bloc/input_bloc.dart';
+import 'package:sortingvisualizer/bloc/theme_bloc/theme_bloc.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/pages/sorting_page.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
@@ -16,7 +17,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    // ignore: close_sinks
     InputBloc inputBloc = BlocProvider.of<InputBloc>(context);
+    ThemeBloc themeBloc = BlocProvider.of<ThemeBloc>(context);
 
     Widget button(
         {@required Widget child,
@@ -25,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       return Expanded(
         child: MaterialButton(
           onPressed: () {
-            inputBloc.add((inputEvent));
+            inputBloc.add(inputEvent);
           },
           shape: ContinuousRectangleBorder(
             borderRadius: BorderRadius.all(Radius.zero),
@@ -43,197 +46,225 @@ class _HomePageState extends State<HomePage> {
     Widget goIcon = Text(
       "Visualize",
       style: TextStyle(
-        color: Theme.of(context).accentColor,
+        color: Theme
+            .of(context)
+            .accentColor,
         fontSize: 20,
         fontStyle: FontStyle.italic,
       ),
     );
 
-    return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          centerTitle: true,
-          title: Text(
-            "Sorting Visualizer",
-            style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.grey.shade800
-                  : Colors.grey.shade100,
-            ),
-          ),
-        ),
-        body: BlocConsumer<InputBloc, AbstractInputState>(
-            cubit: inputBloc,
-            listener: (BuildContext context, AbstractInputState inputState) {
-              if (inputState is VisualizeInputState) {
-                int bars = int.parse(inputState.bars);
+    return BlocBuilder<ThemeBloc, ThemeMode>(
+        cubit: themeBloc,
+        builder: (BuildContext context, ThemeMode themeMode) {
+          Icon icon = Icon(
+            themeMode == ThemeMode.light
+                ? Icons.nights_stay
+                : Icons.brightness_7,
+            color: Theme
+                .of(context)
+                .accentColor,
+          );
 
-                Set<int> arr = Set();
-
-                /// Creating set to prevent same digit
-                for (int i = 0; arr.length < bars; ++i) {
-                  int random = Random().nextInt(MAX_SIZE);
-                  arr.add(random);
-                }
-
-                List<int> list = arr.toList();
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        ChangeNotifierProvider<SortingProvider>.value(
-                      value: SortingProvider(size: bars, array: list),
-                      child: SortingPage(),
-                    ),
+          return Material(
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                centerTitle: true,
+                actions: [
+                  IconButton(icon: icon, onPressed: themeBloc.changeTheme),
+                ],
+                title: Text(
+                  "Sorting Visualizer",
+                  style: TextStyle(
+                    color: Theme
+                        .of(context)
+                        .brightness == Brightness.light
+                        ? Colors.grey.shade800
+                        : Colors.grey.shade100,
                   ),
-                );
-              }
-            },
-            builder: (BuildContext context, AbstractInputState inputState) {
-              String bars = inputState.bars;
-              String error = inputState.error;
+                ),
+              ),
+              body: BlocConsumer<InputBloc, AbstractInputState>(
+                cubit: inputBloc,
+                listener:
+                    (BuildContext context, AbstractInputState inputState) {
+                  if (inputState is VisualizeInputState) {
+                    int bars = int.parse(inputState.bars);
 
-              return Flex(
-                direction: Axis.vertical,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Center(
-                      child: Container(
-                        width: 200,
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Enter number of bars",
-                              style: TextStyle(
-                                color: Theme.of(context).hintColor,
-                              ),
-                            ),
-                            Text(
-                              bars,
-                              style: TextStyle(
-                                letterSpacing: 5,
-                                fontSize: 48.0,
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(8.0),
-                              width: double.infinity,
-                              color: Theme.of(context).accentColor,
-                              height: 2,
-                            ),
-                            Text(
-                              error,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Theme.of(context).errorColor,
-                              ),
-                            )
-                          ],
+                    Set<int> arr = Set();
+
+                    /// Creating set to prevent same digit
+                    for (int i = 0; arr.length < bars; ++i) {
+                      int random = Random().nextInt(MAX_SIZE);
+                      arr.add(random);
+                    }
+
+                    List<int> list = arr.toList();
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                        ChangeNotifierProvider<SortingProvider>.value(
+                          value: SortingProvider(size: bars, array: list),
+                          child: SortingPage(),
                         ),
                       ),
-                    ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Row(
+                    );
+                  }
+                },
+                builder: (BuildContext context, AbstractInputState inputState) {
+                  String bars = inputState.bars;
+                  String error = inputState.error;
+
+                  return Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: Center(
+                          child: Container(
+                            width: 200,
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                button(
-                                  child: text("1"),
-                                  value: "1",
-                                  inputEvent: DigitInputEvent(digit: "1"),
+                                Text(
+                                  "Enter number of bars",
+                                  style: TextStyle(
+                                    color: Theme
+                                        .of(context)
+                                        .hintColor,
+                                  ),
                                 ),
-                                button(
-                                  child: text("2"),
-                                  value: "2",
-                                  inputEvent: DigitInputEvent(digit: "2"),
+                                Text(
+                                  bars,
+                                  style: TextStyle(
+                                    letterSpacing: 5,
+                                    fontSize: 48.0,
+                                  ),
                                 ),
-                                button(
-                                  child: text("3"),
-                                  value: "3",
-                                  inputEvent: DigitInputEvent(digit: "3"),
+                                Container(
+                                  margin: const EdgeInsets.all(8.0),
+                                  width: double.infinity,
+                                  color: Theme
+                                      .of(context)
+                                      .accentColor,
+                                  height: 2,
                                 ),
+                                Text(
+                                  error,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Theme
+                                        .of(context)
+                                        .errorColor,
+                                  ),
+                                )
                               ],
                             ),
                           ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                button(
-                                  child: text("4"),
-                                  value: "4",
-                                  inputEvent: DigitInputEvent(digit: "4"),
-                                ),
-                                button(
-                                  child: text("5"),
-                                  value: "5",
-                                  inputEvent: DigitInputEvent(digit: "5"),
-                                ),
-                                button(
-                                  child: text("6"),
-                                  value: "6",
-                                  inputEvent: DigitInputEvent(digit: "6"),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                button(
-                                  child: text("7"),
-                                  value: "7",
-                                  inputEvent: DigitInputEvent(digit: "7"),
-                                ),
-                                button(
-                                  child: text("8"),
-                                  value: "8",
-                                  inputEvent: DigitInputEvent(digit: "8"),
-                                ),
-                                button(
-                                  child: text("9"),
-                                  value: "9",
-                                  inputEvent: DigitInputEvent(digit: "9"),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                button(
-                                    child: Icon(Icons.backspace),
-                                    value: "b",
-                                    inputEvent: BackspaceInputEvent()),
-                                button(
-                                  child: text("0"),
-                                  value: "0",
-                                  inputEvent: DigitInputEvent(digit: "0"),
-                                ),
-                                button(
-                                    child: goIcon,
-                                    value: "g",
-                                    inputEvent: VisualizedInputEvent()),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              );
-            }),
-      ),
-    );
+                      Flexible(
+                        flex: 1,
+                        child: Container(
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    button(
+                                      child: text("1"),
+                                      value: "1",
+                                      inputEvent: DigitInputEvent(digit: "1"),
+                                    ),
+                                    button(
+                                      child: text("2"),
+                                      value: "2",
+                                      inputEvent: DigitInputEvent(digit: "2"),
+                                    ),
+                                    button(
+                                      child: text("3"),
+                                      value: "3",
+                                      inputEvent: DigitInputEvent(digit: "3"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    button(
+                                      child: text("4"),
+                                      value: "4",
+                                      inputEvent: DigitInputEvent(digit: "4"),
+                                    ),
+                                    button(
+                                      child: text("5"),
+                                      value: "5",
+                                      inputEvent: DigitInputEvent(digit: "5"),
+                                    ),
+                                    button(
+                                      child: text("6"),
+                                      value: "6",
+                                      inputEvent: DigitInputEvent(digit: "6"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    button(
+                                      child: text("7"),
+                                      value: "7",
+                                      inputEvent: DigitInputEvent(digit: "7"),
+                                    ),
+                                    button(
+                                      child: text("8"),
+                                      value: "8",
+                                      inputEvent: DigitInputEvent(digit: "8"),
+                                    ),
+                                    button(
+                                      child: text("9"),
+                                      value: "9",
+                                      inputEvent: DigitInputEvent(digit: "9"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    button(
+                                        child: Icon(Icons.backspace),
+                                        value: "b",
+                                        inputEvent: BackspaceInputEvent()),
+                                    button(
+                                      child: text("0"),
+                                      value: "0",
+                                      inputEvent: DigitInputEvent(digit: "0"),
+                                    ),
+                                    button(
+                                        child: goIcon,
+                                        value: "g",
+                                        inputEvent: VisualizedInputEvent()),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          );
+        });
   }
 }
