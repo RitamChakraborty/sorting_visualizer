@@ -11,7 +11,7 @@ class ThemeChangingIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       _themeMode == ThemeMode.light ? Icons.nights_stay : Icons.brightness_7,
-      color: Theme.of(context).accentColor,
+      color: Theme.of(context).iconTheme.color,
     );
   }
 }

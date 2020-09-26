@@ -33,6 +33,9 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           theme: ThemeData(
             primarySwatch: Colors.blue,
+            iconTheme: IconThemeData(
+              color: Colors.grey.shade800,
+            ),
             textTheme: TextTheme(
               button: TextStyle(color: Colors.white),
             ),
@@ -41,6 +44,9 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             accentColor: Colors.blueAccent,
             buttonColor: Colors.blueAccent,
+            iconTheme: IconThemeData(
+              color: Colors.grey.shade100,
+            ),
           ),
           themeMode: themeMode,
           home: HomePage(),

@@ -118,15 +118,18 @@ class SortingPage extends StatelessWidget {
             title: dropDownButton,
             backgroundColor: Colors.transparent,
             elevation: 0.0,
+            leading: BackButton(
+              color: Theme.of(context).iconTheme.color,
+            ),
             actions: [
               IconButton(
                   icon: icon,
                   onPressed: isSorting
                       ? null
                       : () {
-                    sortingProvider.reset();
-                    themeBloc.changeTheme();
-                  }),
+                          sortingProvider.reset();
+                          themeBloc.changeTheme();
+                        }),
             ],
           ),
           body: SafeArea(
