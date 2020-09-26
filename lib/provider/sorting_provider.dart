@@ -9,8 +9,8 @@ class SortingProvider extends ChangeNotifier {
   final List<int> _indexArr;
   double _animationSpeed = 0;
   bool _stopSort = true;
-  int _swapI = 0;
-  int _swapJ = 0;
+  int _swapI = -1;
+  int _swapJ = -1;
 
   SortingType _selectedSortingType = SortingType.BUBBLE_SORT;
 
@@ -56,8 +56,8 @@ class SortingProvider extends ChangeNotifier {
   void reset() {
     /// Stop sorting
     _stopSort = true;
-    _swapI = 0;
-    _swapJ = 0;
+    _swapI = -1;
+    _swapJ = -1;
     notifyListeners();
 
     /// Reset the main array which is being sorted
@@ -135,8 +135,8 @@ class SortingProvider extends ChangeNotifier {
       await _delay;
     }
 
-    _swapI = 0;
-    _swapJ = 0;
+    _swapI = -1;
+    _swapJ = -1;
     notifyListeners();
   }
 
@@ -174,8 +174,8 @@ class SortingProvider extends ChangeNotifier {
       await _delay;
     }
 
-    _swapI = 0;
-    _swapJ = 0;
+    _swapI = -1;
+    _swapJ = -1;
 
     notifyListeners();
   }
@@ -214,8 +214,8 @@ class SortingProvider extends ChangeNotifier {
       await _swap(i, smallestIndex);
     }
 
-    _swapI = 0;
-    _swapJ = 0;
+    _swapI = -1;
+    _swapJ = -1;
     notifyListeners();
   }
 
@@ -233,8 +233,8 @@ class SortingProvider extends ChangeNotifier {
       await _merge(start, mid, end);
     }
 
-    _swapI = 0;
-    _swapJ = 0;
+    _swapI = -1;
+    _swapJ = -1;
     notifyListeners();
   }
 
@@ -317,8 +317,8 @@ class SortingProvider extends ChangeNotifier {
       notifyListeners();
     }
 
-    _swapI = 0;
-    _swapJ = 0;
+    _swapI = -1;
+    _swapJ = -1;
   }
 
   Future<void> _quickSort(int start, int end) async {
@@ -351,8 +351,8 @@ class SortingProvider extends ChangeNotifier {
 
     await _swap(pIndex, end);
 
-    _swapI = 0;
-    _swapJ = 0;
+    _swapI = -1;
+    _swapJ = -1;
     notifyListeners();
 
     return pIndex;
