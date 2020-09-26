@@ -70,9 +70,7 @@ class _HomePageState extends State<HomePage> {
                 title: Text(
                   "Sorting Visualizer",
                   style: TextStyle(
-                    color: Theme
-                        .of(context)
-                        .brightness == Brightness.light
+                    color: Theme.of(context).brightness == Brightness.light
                         ? Colors.grey.shade800
                         : Colors.grey.shade100,
                   ),

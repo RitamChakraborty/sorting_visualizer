@@ -2,17 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:sortingvisualizer/bloc/theme_bloc/theme_bloc.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
 import 'package:sortingvisualizer/utils/utils.dart';
 import 'package:sortingvisualizer/widgets/bar.dart';
 import 'package:sortingvisualizer/widgets/rounded_button.dart';
 import 'package:sortingvisualizer/widgets/sorting_dropdown.dart';
+import 'package:sortingvisualizer/widgets/theme_changing_icon.dart';
 
 class SortingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ThemeBloc themeBloc = BlocProvider.of<ThemeBloc>(context);
     SortingProvider sortingProvider = Provider.of<SortingProvider>(context);
 
     int n = sortingProvider.size;
@@ -37,7 +41,7 @@ class SortingPage extends StatelessWidget {
         .toList();
 
     List<double> marginArr =
-        indexArr.map((int value) => (barMargin + (division * value))).toList();
+    indexArr.map((int value) => (barMargin + (division * value))).toList();
 
     Widget bar({@required double height, @required double width, Color color}) {
       return Bar(
@@ -52,15 +56,17 @@ class SortingPage extends StatelessWidget {
     /// Generating the bars
     List<Widget> children = List<Widget>.generate(
         n,
-        (int index) => bar(
-              height: heightArr[index],
-              width: marginArr[index],
-              color: swapping
-                  ? index == swapI
-                      ? Colors.red
-                      : index == swapJ ? Colors.green : null
-                  : null,
-            ));
+            (int index) => bar(
+          height: heightArr[index],
+          width: marginArr[index],
+          color: swapping
+              ? index == swapI
+              ? Colors.red
+              : index == swapJ
+              ? Colors.green
+              : null
+              : null,
+        ));
 
     Widget dropDownButton = SortingDropdown(
       value: value,
@@ -99,39 +105,47 @@ class SortingPage extends StatelessWidget {
       },
     );
 
-    return Material(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: dropDownButton,
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-        ),
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  resetButton,
-                  Expanded(child: animationSpeedSlider),
-                  sortButton,
+    return BlocBuilder<ThemeBloc, ThemeMode>(
+        builder: (BuildContext context, ThemeMode themeMode) {
+          Widget icon = ThemeChangingIcon(themeMode: themeMode);
+
+          return Material(
+            child: Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: dropDownButton,
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                actions: [
+                  IconButton(icon: icon, onPressed: themeBloc.changeTheme),
                 ],
               ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.bottomLeft,
-                  child: Stack(
-                    alignment: Alignment.bottomLeft,
-                    children: children,
-                  ),
+              body: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        resetButton,
+                        Expanded(child: animationSpeedSlider),
+                        sortButton,
+                      ],
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Stack(
+                          alignment: Alignment.bottomLeft,
+                          children: children,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }
