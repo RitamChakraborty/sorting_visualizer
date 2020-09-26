@@ -11,7 +11,7 @@ import 'package:sortingvisualizer/utils/utils.dart';
 import 'package:sortingvisualizer/widgets/bar.dart';
 import 'package:sortingvisualizer/widgets/rounded_button.dart';
 import 'package:sortingvisualizer/widgets/sorting_dropdown.dart';
-import 'package:sortingvisualizer/widgets/theme_changing_icon.dart';
+import 'package:sortingvisualizer/widgets/theme_change_icon.dart';
 
 class SortingPage extends StatelessWidget {
   @override
@@ -110,6 +110,9 @@ class SortingPage extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeMode>(
         builder: (BuildContext context, ThemeMode themeMode) {
       Widget icon = ThemeChangingIcon(themeMode: themeMode);
+      String themeChangerToolTip = themeMode == ThemeMode.light
+          ? "Change to Dark Theme"
+          : "Change to Light Theme";
 
       return Material(
         child: Scaffold(
@@ -123,13 +126,15 @@ class SortingPage extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                  icon: icon,
-                  onPressed: isSorting
-                      ? null
-                      : () {
-                          sortingProvider.reset();
-                          themeBloc.changeTheme();
-                        }),
+                icon: icon,
+                onPressed: isSorting
+                    ? null
+                    : () {
+                        sortingProvider.reset();
+                        themeBloc.changeTheme();
+                      },
+                tooltip: themeChangerToolTip,
+              ),
             ],
           ),
           body: SafeArea(

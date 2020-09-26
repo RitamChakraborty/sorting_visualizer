@@ -20,6 +20,10 @@ class SortingDropdown extends StatelessWidget {
       onPressed: null,
       disabledBorderColor: Theme.of(context).accentColor,
       shape: SHAPE,
+      borderSide: BorderSide(
+          width: 4,
+          style: BorderStyle.solid,
+          color: Theme.of(context).accentColor),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           onChanged: _onChanged,

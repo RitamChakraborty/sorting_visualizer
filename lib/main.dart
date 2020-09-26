@@ -30,8 +30,10 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeMode>(
       builder: (BuildContext context, ThemeMode themeMode) {
         return MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Sorting Visualizer',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            brightness: Brightness.light,
             primarySwatch: Colors.blue,
             iconTheme: IconThemeData(
               color: Colors.grey.shade800,

@@ -8,7 +8,7 @@ import 'package:sortingvisualizer/bloc/theme_bloc/theme_bloc.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/pages/sorting_page.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
-import 'package:sortingvisualizer/widgets/theme_changing_icon.dart';
+import 'package:sortingvisualizer/widgets/theme_change_icon.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
         cubit: themeBloc,
         builder: (BuildContext context, ThemeMode themeMode) {
           Widget icon = ThemeChangingIcon(themeMode: themeMode);
+          String themeChangerToolTip = themeMode == ThemeMode.light ? "Change to Dark Theme" : "Change to Light Theme";
 
           return Material(
             child: Scaffold(
@@ -65,7 +66,11 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0.0,
                 centerTitle: true,
                 actions: [
-                  IconButton(icon: icon, onPressed: themeBloc.changeTheme),
+                  IconButton(
+                    icon: icon,
+                    onPressed: themeBloc.changeTheme,
+                    tooltip: themeChangerToolTip,
+                  ),
                 ],
                 title: Text(
                   "Sorting Visualizer",
@@ -97,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
-                        ChangeNotifierProvider<SortingProvider>.value(
+                            ChangeNotifierProvider<SortingProvider>.value(
                           value: SortingProvider(size: bars, array: list),
                           child: SortingPage(),
                         ),
@@ -124,9 +129,7 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   "Enter number of bars",
                                   style: TextStyle(
-                                    color: Theme
-                                        .of(context)
-                                        .hintColor,
+                                    color: Theme.of(context).hintColor,
                                   ),
                                 ),
                                 Text(
@@ -139,18 +142,14 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   margin: const EdgeInsets.all(8.0),
                                   width: double.infinity,
-                                  color: Theme
-                                      .of(context)
-                                      .accentColor,
+                                  color: Theme.of(context).accentColor,
                                   height: 2,
                                 ),
                                 Text(
                                   error,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    color: Theme
-                                        .of(context)
-                                        .errorColor,
+                                    color: Theme.of(context).errorColor,
                                   ),
                                 )
                               ],
