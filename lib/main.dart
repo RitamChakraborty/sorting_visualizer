@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sortingvisualizer/bloc/input_bloc.dart';
+import 'package:sortingvisualizer/bloc/input_bloc/input_bloc.dart';
 import 'package:sortingvisualizer/pages/home_page.dart';
 
 void main() => runApp(MyApp());

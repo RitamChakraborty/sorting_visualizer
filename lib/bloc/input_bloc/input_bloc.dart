@@ -1,9 +1,9 @@
-export 'events/input_event.dart';
-export 'states/input_state.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sortingvisualizer/bloc/events/input_event.dart';
-import 'package:sortingvisualizer/bloc/states/input_state.dart';
+import 'package:sortingvisualizer/bloc/input_bloc/events/input_event.dart';
+import 'package:sortingvisualizer/bloc/input_bloc/states/input_state.dart';
+
+export '../input_bloc/events/input_event.dart';
+export '../input_bloc/states/input_state.dart';
 
 class InputBloc extends Bloc<AbstractInputEvent, AbstractInputState> {
   String _bars = "100";
@@ -15,10 +15,8 @@ class InputBloc extends Bloc<AbstractInputEvent, AbstractInputState> {
     if (event is DigitInputEvent) {
       if (_bars.isEmpty && event.digit == "0") {
         yield CorrectInputState(bars: "");
-      }
-      else if (int.parse(_bars + event.digit) > 1000) {
-        yield ErrorInputState(
-            bars: _bars, error: "Maximum number is 1000");
+      } else if (int.parse(_bars + event.digit) > 1000) {
+        yield ErrorInputState(bars: _bars, error: "Maximum number is 1000");
       } else {
         _bars += event.digit;
         yield CorrectInputState(bars: _bars);

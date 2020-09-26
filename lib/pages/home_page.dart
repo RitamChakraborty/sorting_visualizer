@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:sortingvisualizer/bloc/input_bloc.dart';
+import 'package:sortingvisualizer/bloc/input_bloc/input_bloc.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/pages/sorting_page.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
