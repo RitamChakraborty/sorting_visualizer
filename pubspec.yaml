@@ -9,7 +9,8 @@ dependencies:
   flutter:
     sdk: flutter
   provider: any
-  flutter_bloc: any
+  flutter_bloc: ^6.0.5
+  hydrated_bloc: ^6.0.1
 
 dev_dependencies:
   flutter_test:
