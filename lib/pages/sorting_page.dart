@@ -20,6 +20,8 @@ class SortingPage extends StatelessWidget {
     SortingProvider sortingProvider = Provider.of<SortingProvider>(context);
 
     int n = sortingProvider.size;
+    bool isSorting = sortingProvider.isSorting;
+
     List<int> array = sortingProvider.array;
     List<int> indexArr = sortingProvider.indexArr;
     String value =
@@ -117,7 +119,14 @@ class SortingPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             actions: [
-              IconButton(icon: icon, onPressed: themeBloc.changeTheme),
+              IconButton(
+                  icon: icon,
+                  onPressed: isSorting
+                      ? null
+                      : () {
+                    sortingProvider.reset();
+                    themeBloc.changeTheme();
+                  }),
             ],
           ),
           body: SafeArea(

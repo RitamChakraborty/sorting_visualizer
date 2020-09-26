@@ -8,7 +8,7 @@ class SortingProvider extends ChangeNotifier {
   final List<int> _backupArray;
   final List<int> _indexArr;
   double _animationSpeed = 0;
-  bool _stopSort = false;
+  bool _stopSort = true;
   int _swapI = 0;
   int _swapJ = 0;
 
@@ -41,6 +41,8 @@ class SortingProvider extends ChangeNotifier {
 
   int get swapJ => _swapJ;
 
+  bool get isSorting => !_stopSort;
+
   Future<dynamic> get _delay => Future.delayed(Duration(
         milliseconds:
             _animationSpeed.toInt() == 0 ? 0 : _animationSpeed.toInt() + 100,
@@ -69,26 +71,32 @@ class SortingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> sort() {
+  Future<void> sort() async {
     _stopSort = false;
 
     switch (_selectedSortingType) {
       case SortingType.BUBBLE_SORT:
-        return _bubbleSort();
+        await _bubbleSort();
+        break;
       case SortingType.INSERTION_SORT:
-        return _insertionSort();
+        await _insertionSort();
+        break;
       case SortingType.SELECTION_SORT:
-        return _selectionSort();
+        await _selectionSort();
+        break;
       case SortingType.MERGE_SORT:
-        return _mergeSort(0, _size - 1);
+        await _mergeSort(0, _size - 1);
+        break;
       case SortingType.QUICK_SORT:
-        return _quickSort(0, _size - 1);
+        await _quickSort(0, _size - 1);
+        break;
     }
 
-    return null;
+    _stopSort = true;
+    notifyListeners();
   }
 
-  Future<void> _swap(int i , int j) async {
+  Future<void> _swap(int i, int j) async {
     if (_stopSort) {
       return;
     }
@@ -196,7 +204,7 @@ class SortingProvider extends ChangeNotifier {
           smallest = _arr[j];
 
           int _indexJ = _backupArray.indexOf(smallest);
-          _swapJ= _indexJ;
+          _swapJ = _indexJ;
 
           await _delay;
           notifyListeners();
@@ -336,7 +344,7 @@ class SortingProvider extends ChangeNotifier {
       }
 
       if (_arr[i] <= pivot) {
-       await _swap(i, pIndex);
+        await _swap(i, pIndex);
         ++pIndex;
       }
     }
@@ -346,7 +354,7 @@ class SortingProvider extends ChangeNotifier {
     _swapI = 0;
     _swapJ = 0;
     notifyListeners();
-    
+
     return pIndex;
   }
 }
