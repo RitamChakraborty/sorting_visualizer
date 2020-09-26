@@ -8,6 +8,7 @@ import 'package:sortingvisualizer/bloc/theme_bloc/theme_bloc.dart';
 import 'package:sortingvisualizer/data/constants.dart';
 import 'package:sortingvisualizer/pages/sorting_page.dart';
 import 'package:sortingvisualizer/provider/sorting_provider.dart';
+import 'package:sortingvisualizer/widgets/theme_changing_icon.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -46,9 +47,7 @@ class _HomePageState extends State<HomePage> {
     Widget goIcon = Text(
       "Visualize",
       style: TextStyle(
-        color: Theme
-            .of(context)
-            .accentColor,
+        color: Theme.of(context).accentColor,
         fontSize: 20,
         fontStyle: FontStyle.italic,
       ),
@@ -57,14 +56,7 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<ThemeBloc, ThemeMode>(
         cubit: themeBloc,
         builder: (BuildContext context, ThemeMode themeMode) {
-          Icon icon = Icon(
-            themeMode == ThemeMode.light
-                ? Icons.nights_stay
-                : Icons.brightness_7,
-            color: Theme
-                .of(context)
-                .accentColor,
-          );
+          Widget icon = ThemeChangingIcon(themeMode: themeMode);
 
           return Material(
             child: Scaffold(
