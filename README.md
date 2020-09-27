@@ -24,15 +24,15 @@ in ascending order. In this application how the elements change their position i
 > Light Theme
 
 <p align="center">
-    <img alt="Desktop Light" src="assets/demos/light_web.gif" height="384" width="512" hspace="10" vspace="10">
-    <img alt="Mobile Light" src="assets/demos/light_mobile.gif" height="384" width="335" hspace="10" vspace="10">
+    <img alt="Desktop Light" src="assets/demos/light_web.gif" height="360" width="480" hspace="10" vspace="10">
+    <img alt="Mobile Light" src="assets/demos/light_mobile.gif" height="360" width="314" hspace="10" vspace="10">
 </p>
 
 > Dark Theme
 
 <p align="center">
-    <img alt="Desktop Dark" src="assets/demos/dark_web.gif" height="384" width="512" hspace="10" vspace="10">
-    <img alt="Mobile Dark" src="assets/demos/dark_mobile.gif" height="384" width="335" hspace="10" vspace="10">
+    <img alt="Desktop Dark" src="assets/demos/dark_web.gif" height="360" width="480" hspace="10" vspace="10">
+    <img alt="Mobile Dark" src="assets/demos/dark_mobile.gif" height="360" width="314" hspace="10" vspace="10">
 </p>
 
 ## Libraries Used
@@ -42,7 +42,7 @@ in ascending order. In this application how the elements change their position i
 
 ## How to use
 
-Download the apk from [here]().
+Download the apk from [here](https://github.com/RitamChakraborty/sorting_visualizer/releases/download/v1.0.0-beta/app-release.apk).
 
 Or visit the website [here](https://ritamchakraborty.github.io/sorting_visualizer/#/).
 
